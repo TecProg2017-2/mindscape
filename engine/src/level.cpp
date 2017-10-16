@@ -10,6 +10,7 @@
  *
  */
 #include "level.hpp"
+#include <include/log.hpp>
 
 using namespace engine;
 
@@ -22,8 +23,7 @@ using namespace engine;
 void Level::load() {
     for(auto game_object : objects) {
         /* loops every game object in the objects list */
-        std::cout << "Loading " << game_object->name << std::endl;
-
+        DEBUG("Loading " + game_object->name);
         game_object->load();
 
         for(auto hit : game_object->get_hitboxes()) {
@@ -42,7 +42,7 @@ void Level::load() {
 void Level::free() {
     for(auto game_object : objects) {
 		/* iterates every game object in the objects list */
-        std::cout << "Freeing" << game_object->name << std::endl;
+        DEBUG("Freeing " + game_object->name);
 
         game_object->free();
     }
@@ -57,6 +57,7 @@ void Level::free() {
  *
  */
 void Level::draw() {
+    DEBUG("Level draw objects");
     for(auto game_object : objects) {
 		/* iterates every game object in the objects list */
         if(game_object->is_active()) {

@@ -8,6 +8,7 @@
 * https://github.com/TecProg2017-2/mindscape/blob/master/LICENSE.md
 */
 #include "physics.hpp"
+#include <include/log.hpp>
 
 using namespace engine;
 
@@ -23,6 +24,7 @@ std::vector<GameObject *> Physics::physicables = {};
 * @return Physics instance
 */
 Physics *Physics::get_instance() {
+	DEBUG("Getting instance from physics");
 	if (!instance) {
 		instance = new Physics();
 	}
@@ -39,6 +41,7 @@ Physics *Physics::get_instance() {
 * @return std::pair with the new speed.
 */
 std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) {
+	DEBUG("Getting speed from object");
 	std::pair<float, float> new_speed (0.0, 0.0);
 
 	new_speed.first = speed.first;
@@ -56,6 +59,7 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 * @return std::pair with the new position of the object.
 */
 std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
+	DEBUG("Getting position from object");
 	std::pair<float, float> new_position (0.0, 0.0);
 
 	new_position.first = position.first + speed.first;
@@ -72,6 +76,7 @@ std::pair<float, float> Physics::calculate_position(std::pair<float, float> posi
 * @return void.
 */
 void Physics::update_speed(GameObject *game_object) {
+	DEBUG("Setting speed from object");
 	std::pair<float, float> old_speed = game_object->get_speed();
 	std::pair<float, float> new_speed = calculate_speed(old_speed);
 
@@ -86,6 +91,7 @@ void Physics::update_speed(GameObject *game_object) {
 * @return void.
 */
 void Physics::update_position(GameObject *game_object) {
+	DEBUG("Setting speed from object");
 	std::pair<float, float> speed = game_object->get_speed();
 	std::pair<float, float> old_position = game_object->get_position();
 	std::pair<float, float> new_position = calculate_position(old_position, speed);
@@ -101,6 +107,7 @@ void Physics::update_position(GameObject *game_object) {
 * @return void.
 */
 void Physics::act_on(GameObject *game_object) {
+	DEBUG("Calling update speed and position");
 	update_speed(game_object);
 	update_position(game_object);
 }
@@ -137,5 +144,6 @@ void Physics::act() {
 * @return float with the gravity value.
 */
 float Physics::get_gravity() {
+	DEBUG("Getting game gravity");
 	return gravity;
 }
