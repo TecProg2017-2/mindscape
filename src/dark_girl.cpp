@@ -13,6 +13,7 @@
 #include "../include/scorpion.hpp"
 #include "../include/goop.hpp"
 #include "../engine/include/game.hpp"
+#include "../engine/include/log.hpp"
 #include "level_factory.hpp"
 #include <typeinfo>
 #include <algorithm>
@@ -65,9 +66,11 @@ DarkGirl::DarkGirl(
 void DarkGirl::initialize_state_map() {
 	/* Sets the initial position of the Dark Girl on the game,
 	 also her action and states*/
+	DEBUG("Started");
 	states.set_state("X_STATE", "LOOKING_RIGHT");
 	states.set_state("Y_STATE", "FALLING");
 	states.set_state("ACTION_STATE", "NORMAL");
+	DEBUG("Ended");
 }
 
 /**
@@ -79,6 +82,7 @@ void DarkGirl::initialize_state_map() {
  *
  */
 void DarkGirl::initialize_hitboxes() {
+	DEBUG("Started");
 	/* Get actual state of the game */
 	engine::Game& game = engine::Game::get_instance();
 
@@ -107,6 +111,8 @@ void DarkGirl::initialize_hitboxes() {
 
 	/* Add component in the game */
 	add_component(footer);
+
+	DEBUG("Ended");
 }
 
 /**
@@ -118,6 +124,7 @@ void DarkGirl::initialize_hitboxes() {
  *
  */
 void DarkGirl::initialize_audio_effects() {
+	DEBUG("Started");
 
 	/* Initializes Audio effects while the Dark GIrl is Walking*/
 	engine::Audio * little_girl_steps = nullptr;
@@ -151,6 +158,8 @@ void DarkGirl::initialize_audio_effects() {
 	);
 	sword_song->set_duration(0.5);
 	add_component(sword_song);
+
+	DEBUG("Ended");
 }
 
 /**
@@ -161,8 +170,10 @@ void DarkGirl::initialize_audio_effects() {
  * @return void
  */
 void DarkGirl::initialize_animations() {
+	DEBUG("Started");
 
 	/* Initializes animation of the Dark Girl running right */
+	DEBUG("running_right_animation");
 	engine::Animation* running_right_animation = nullptr;
 	running_right_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_running_right.png",
@@ -171,6 +182,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("running_right_animation", running_right_animation);
 
 	/* Initializes animation of the Dark Girl running left */
+	DEBUG("running_left_animation");
 	engine::Animation* running_left_animation = nullptr;
 	running_left_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_running_left.png",
@@ -179,6 +191,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("running_left_animation", running_left_animation);
 
 	/* Initializes animation of the Dark Girl standing looking right */
+	DEBUG("idle_right_animation");
 	engine::Animation* idle_right_animation = nullptr;
 	idle_right_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_idle_right.png",
@@ -187,6 +200,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("idle_right_animation", idle_right_animation);
 
 	/* Initializes animation of the Dark Girl standing looking left */
+	DEBUG("idle_left_animation");
 	engine::Animation* idle_left_animation = nullptr;
 	idle_left_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_idle_left.png",
@@ -195,6 +209,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("idle_left_animation", idle_left_animation);
 
 	/* Initializes animation of the Dark Girl jumping to the right */
+	DEBUG("jumping_right_animation");
 	engine::Animation* jumping_right_animation = nullptr;
 	jumping_right_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_jumping_right.png",
@@ -203,6 +218,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("jumping_right_animation", jumping_right_animation);
 
 	/* Initializes animation of the Dark Girl jumping to the left */
+	DEBUG("jumping_left_animation");
 	engine::Animation* jumping_left_animation = nullptr;
 	jumping_left_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_jumping_left.png",
@@ -211,6 +227,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("jumping_left_animation", jumping_left_animation);
 
 	/* Initializes animation of the Dark Girl attacking to the right */
+	DEBUG("attacking_right_animation");
 	engine::Animation* attacking_right_animation = nullptr;
 	attacking_right_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_attacking_right.png",
@@ -220,6 +237,7 @@ void DarkGirl::initialize_animations() {
 	add_animation("attacking_right_animation", attacking_right_animation);
 
 	/* Initializes animation of the Dark Girl attacking to the left */
+	DEBUG("attacking_left_animation");
 	engine::Animation* attacking_left_animation = nullptr;
 	attacking_left_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_attacking_left.png",
@@ -230,6 +248,7 @@ void DarkGirl::initialize_animations() {
 
 	/* Initializes animation of the Dark Girl
 		when she was sying looking to the left */
+	DEBUG("dying_left_animation");
 	engine::Animation* dying_left_animation = nullptr;
 	dying_left_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_dying_left.png",
@@ -242,6 +261,7 @@ void DarkGirl::initialize_animations() {
 
 	/* Initializes animation of the Dark Girl
 		when she was sying looking to the right */
+	DEBUG("dying_right_animation");
 	engine::Animation* dying_right_animation = nullptr;
 	dying_right_animation = create_animation(
 			"../assets/images/sprites/dark_girl/dark_girl_dying_right.png",
@@ -257,6 +277,7 @@ void DarkGirl::initialize_animations() {
 	idle_right_animation->activate();
 	set_actual_animation(idle_right_animation);
 
+	DEBUG("Started");
 }
 
 /**
@@ -274,13 +295,17 @@ void DarkGirl::initialize_animations() {
  * @return animation created
  */
 engine::Animation* DarkGirl::create_animation(
+
 		std::string image_path,
 		int sprite_lines,
 		int sprite_columns,
 		double duration,
 		std::string direction) {
 
+	DEBUG("Started");
+
 	engine::Game& game = engine::Game::get_instance();
+
 
 	/* Creates and initializes the object of the Dark GIrl */
 	engine::Animation* animation = nullptr;
@@ -308,6 +333,8 @@ engine::Animation* DarkGirl::create_animation(
 			std::make_pair(0, 0)
 	);
 
+	DEBUG("Ended");
+
 	return animation;
 }
 
@@ -321,10 +348,14 @@ engine::Animation* DarkGirl::create_animation(
 void DarkGirl::initialize_as_physicable() {
 
 	/* Gets physics objects and makes dark girl collidable */
+	DEBUG("Started");
+
 	engine::Physics *physics = nullptr;
 	physics = engine::Physics::get_instance();
 	physics->add_physicable(this);
 	collidable = true;
+
+	DEBUG("Ended");
 }
 
 /**
@@ -341,6 +372,8 @@ void DarkGirl::initialize_as_physicable() {
 void DarkGirl::on_collision(engine::GameObject* other,
 							engine::Hitbox* p_my_hitbox,
 							engine::Hitbox* p_other_hitbox) {
+
+	DEBUG("Started");
 
 	/* Gets instances of the Enemies */
 	Platform* platform = nullptr;
@@ -414,6 +447,8 @@ void DarkGirl::on_collision(engine::GameObject* other,
 			hit(other,1);
 		}
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -428,6 +463,7 @@ void DarkGirl::on_collision(engine::GameObject* other,
 void DarkGirl::die(engine::GameObject *game_object) {
 
 	/* Gets the actual state of the dark Girl */
+	DEBUG("Started");
 	std::string actual_x_state = "";
 	actual_x_state = get_state("X_STATE");
 
@@ -447,7 +483,10 @@ void DarkGirl::die(engine::GameObject *game_object) {
 		set_actual_animation(animations["dying_right_animation"]);
 	}
 
+
 	sleep(1);
+
+	DEBUG("Ended");
 }
 
 /**
@@ -460,6 +499,7 @@ void DarkGirl::die(engine::GameObject *game_object) {
  * @return void
  */
 void DarkGirl::on_event(GameEvent game_event) {
+	DEBUG("Started");
 
 	/* Gets the name of the game event */
 	std::string event_name = "";
@@ -507,6 +547,8 @@ void DarkGirl::on_event(GameEvent game_event) {
 		/*Makes the dark girl attack*/
 		attack();
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -522,6 +564,8 @@ void DarkGirl::jump(std::string actual_x_state) {
 
 	/*if the states of the dark girl on y axis is
 	 different from jumping or falling */
+	DEBUG("Started");
+
 	if(get_state("Y_STATE") != "JUMPING" || get_state("Y_STATE") != "FALLING") {
 
 		/* Makes the dark girl jump */
@@ -579,6 +623,8 @@ void DarkGirl::jump(std::string actual_x_state) {
 			jumping_animation_count = 26;
 		}
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -596,6 +642,7 @@ void DarkGirl::move_right(std::string actual_x_state,
 
 	/* Gets the actual animation and increses
 	the coordinatesOnTexture value in 192*/
+	DEBUG("Started");
 	engine::Animation* actual_animation = nullptr;
 	actual_animation = get_actual_animation();
 
@@ -622,6 +669,8 @@ void DarkGirl::move_right(std::string actual_x_state,
 		play_song("steps");
 		set_actual_animation(animations["jumping_right_animation"]);
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -639,6 +688,7 @@ void DarkGirl::move_left(std::string actual_x_state,
 
 	/* Gets the actual animation and decreases
 	the coordinatesOnTexture value in 192*/
+	DEBUG("Started");
 	engine::Animation* actual_animation = nullptr;
 	actual_animation = get_actual_animation();
 
@@ -665,6 +715,8 @@ void DarkGirl::move_left(std::string actual_x_state,
 		play_song("steps");
 		set_actual_animation(animations["jumping_left_animation"]);
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -677,6 +729,7 @@ void DarkGirl::move_left(std::string actual_x_state,
 void DarkGirl::attack() {
 
 	/* Gets the actual state of the dark girl on the axis X*/
+	DEBUG("Started");
 	std::string actual_x_state = "";
 	actual_x_state = states.get_state("X_STATE");
 
@@ -700,6 +753,8 @@ void DarkGirl::attack() {
 	}
 
 	play_song("sword_attack");
+
+	DEBUG("Ended");
 }
 
 /**
@@ -714,6 +769,7 @@ void DarkGirl::attack() {
 void DarkGirl::on_attack(GameObject *game_object) {
 
 	/* Gets the actual state on the X axis */
+	DEBUG("Started");
 	std::string actual_x_state = "";
 	actual_x_state = states.get_state("X_STATE");
 
@@ -733,6 +789,8 @@ void DarkGirl::on_attack(GameObject *game_object) {
 		/* Makes the dark girl be attacked by the right */
 		set_actual_animation(animations["on_attack_right_animation"]);
 	}
+
+	DEBUG("Ended");
 }
 
 /**
@@ -746,6 +804,7 @@ void DarkGirl::on_attack(GameObject *game_object) {
 void DarkGirl::update_state() {
 
 	/* Gets the actual animations */
+	DEBUG("Started");
 	engine::Animation* actual_animation = nullptr;
 	actual_animation = get_actual_animation();
 
@@ -826,4 +885,6 @@ void DarkGirl::update_state() {
 	 sets speed on the x axis equal to 0*/
 	set_position_x(get_position_x() - get_speed_x());
 	set_speed_x(0.0);
+
+	DEBUG("Ended");
 }
