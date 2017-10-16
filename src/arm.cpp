@@ -10,6 +10,7 @@
 
 #include "../include/arm.hpp"
 #include "../include/platform.hpp"
+#include <../engine/include/log.hpp>
 
 using namespace mindscape;
 
@@ -49,6 +50,7 @@ Arm::Arm(
  * @return void
  */
 void Arm::initialize_animations() {
+	DEBUG("Initialize animation right arm");
 	engine::Animation *right_arm = create_animation(
 			"../assets/images/sprites/enemies/arm/right_arm.png",
 			1, 4, 3.0, "RIGHT"
@@ -63,6 +65,7 @@ void Arm::initialize_animations() {
 	add_animation("right_arm", right_arm);
 	right_arm->activate();
 
+	DEBUG("Initialize animation left arm");
 	engine::Animation *left_arm = create_animation(
 			"../assets/images/sprites/enemies/arm/left_arm.png",
 			1, 4, 3.0, "LEFT"
@@ -97,6 +100,8 @@ engine::Animation *Arm::create_animation(
 		int sprite_columns,
 		double duration,
 		std::string direction) {
+
+	DEBUG("Create default animation for arm");
 	engine::Game &game = engine::Game::get_instance();
 	
 	engine::Animation *animation = new engine::Animation(
@@ -129,6 +134,7 @@ engine::Animation *Arm::create_animation(
  * @return void
  */
 void Arm::initialize_as_physicable() {
+	DEBUG("Initializing arm as physicable");
 	engine::Physics *physics = engine::Physics::get_instance();
 	physics->add_physicable(this);
 	collidable = true;
@@ -142,6 +148,7 @@ void Arm::initialize_as_physicable() {
  * @return void
  */
 void Arm::initialize_hitboxes() {
+	DEBUG("Initializing arm hitboxes");
 	engine::Game &game = engine::Game::get_instance();
 	
 	engine::Hitbox *arm_hitbox = new engine::Hitbox(
