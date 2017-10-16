@@ -8,6 +8,7 @@
 * https://github.com/TecProg2017-2/mindscape/blob/master/LICENSE.md
 */
 #include "../include/boss.hpp"
+#include <../engine/include/log.hpp>
 
 using namespace mindscape;
 /**
@@ -20,6 +21,7 @@ using namespace mindscape;
 * @return void.
 */
 void Boss::set_boss_part(std::string boss_part_name, Enemy* boss_part_reference){
+	DEBUG("Set box boss part");
     boss_parts[boss_part_name] = boss_part_reference;
 }
 /**
@@ -30,6 +32,7 @@ void Boss::set_boss_part(std::string boss_part_name, Enemy* boss_part_reference)
 * @return std::map<std::string, Enemy*> containing the boss' parts.
 */
 std::map<std::string,Enemy*> Boss::get_boss_parts(){
+	DEBUG("Get box boss part");
     return boss_parts;
 }
 

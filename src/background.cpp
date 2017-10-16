@@ -8,6 +8,7 @@
 * https://github.com/TecProg2017-2/mindscape/blob/master/LICENSE.md
 */
 #include "../include/background.hpp"
+#include <../engine/include/log.hpp>
 
 using namespace mindscape;
 /**
@@ -40,6 +41,7 @@ void Background::on_event(GameEvent game_event){
 * @return void.
 */
 void Background::set_paralax(int p_paralax) {
+    DEBUG("Set paralax in background");
     if (p_paralax > 10 || p_paralax < 0) {
     /* If paralax is out of valid range */
         paralax = 10; /* Sets paralax to a valid value */
@@ -58,5 +60,6 @@ void Background::set_paralax(int p_paralax) {
 * @return int containing the paralax value.
 */
 int Background::get_paralax() {
+    DEBUG("Get paralax from background");
     return paralax;
 }
