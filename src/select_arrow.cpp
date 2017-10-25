@@ -88,6 +88,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 0;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
 
 		if (event_name == "UP") {
 			enable = false;
@@ -99,6 +102,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 3;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	if (enable == false) {
@@ -106,6 +115,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 			enable = true;
 			time = 0;
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 
@@ -118,6 +133,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 			if (event_name == "ENTER") {
 				action->execute("../data/1.level.dat");
 			}
+			else {
+				/* Do  nothing*/
+			}
 			break;
 
 			//Instructions
@@ -126,6 +144,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 
 			if (event_name == "ENTER") {
 				action->execute("../data/2.level.dat");
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
@@ -136,6 +157,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 			if (event_name == "ENTER") {
 				action->execute("../data/credits_scene.dat");
 			}
+			else {
+				/* Do  nothing*/
+			}
 			break;
 
 			//Exit
@@ -143,6 +167,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 			set_position(std::make_pair(get_position().first, 335));
 
 			if (event_name == "ENTER") {
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
