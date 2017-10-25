@@ -26,6 +26,9 @@ void EventHandler::dispatch_pending_events(unsigned now) {
 					/* if the game state is paused it breaks the loop */
 					break;
 				}
+				else {
+					/* Do  nothing*/
+				}
 
 				listener->on_event(event);
 
@@ -33,14 +36,23 @@ void EventHandler::dispatch_pending_events(unsigned now) {
 					/* breaks the loop if the game state is paused */
 					break;
 				}
+				else {
+					/* Do  nothing*/
+				}
 				listener->update_hitboxes();
 				listener->notify_observers();
+			}
+			else {
+				/* Do  nothing*/
 			}
 		}
 		if(game.get_state() == Game::PAUSED) {
 			/* breaks the loop if the game state is paused */
 			INFO("Game Paused");
 			break;
+		}
+		else {
+			/* Do  nothing*/
 		}
 	}
 }
@@ -70,15 +82,19 @@ std::list<KeyboardEvent> EventHandler::pending_keyboard_events(unsigned now) {
 			it = sdl_events.erase(it);
 			has_events = true; /**< make variable responsible for checking if has events to be processed true */
 		}
-
-		else
+		else {
 			/* increments the iterator */
 			++it;
+		}
+
 	}
 
 	if(!has_events) {
 		/* if has events to be processed */
 		try_to_get_delayed_keys(events);
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	return events;
@@ -101,6 +117,9 @@ void EventHandler::try_to_get_delayed_keys(std::list<KeyboardEvent>& events) {
 			events.push_back(event);
 			break;
 		}
+		else {
+			/* Do  nothing*/
+		}
 	}
 }
 
@@ -110,6 +129,9 @@ void EventHandler::get_events_until_now(unsigned now) {
 	if (last_update == now) {
 		/* returns if the last update is equals to now */
 		return;
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	sdl_events.clear();
@@ -125,6 +147,9 @@ void EventHandler::get_events_until_now(unsigned now) {
 			/* if the timestamp is after now */
 			break;
 		}
+		else {
+			/* Do  nothing*/
+		}
 
 		SDL_PollEvent(&event);
 
@@ -132,6 +157,9 @@ void EventHandler::get_events_until_now(unsigned now) {
 			/* if the event type is a SDL QUIT */
 			Game::get_instance().set_state(Game::QUIT);
 			break;
+		}
+		else {
+			/* Do  nothing*/
 		}
 
 		sdl_events.push_back(event);
@@ -148,6 +176,9 @@ void EventHandler::add_listener(GameObject * listener) {
 		/* if the listener is null (no listeners registered) */
 		listeners.push_back(listener);
 	}
+	else {
+		/* Do  nothing*/
+	}
 }
 
 void EventHandler::remove_listener(GameObject * listener) {
@@ -156,5 +187,8 @@ void EventHandler::remove_listener(GameObject * listener) {
 	if(listener != NULL) {
 		/* if the listener is not null (not empty) */
 		listeners.remove(listener);
+	}
+	else {
+		/* Do  nothing*/
 	}
 }
