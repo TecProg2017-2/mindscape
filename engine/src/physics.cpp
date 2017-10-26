@@ -49,6 +49,22 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 
 	return new_speed;
 }
+
+/**
+* @brief Updates the speed of a game object.
+*
+* The speed must be set to the game object to ensure that the changes will be reflected on the gameplay
+*
+* @param the GameObject instance that will have its speed updated
+* @return void.
+*/
+void Physics::update_speed(GameObject *game_object) {
+	std::pair<float, float> old_speed = game_object->get_speed();
+	std::pair<float, float> new_speed = calculate_speed(old_speed);
+
+	game_object->set_speed(new_speed);
+}
+
 /**
 * @brief Calculates the position of an object.
 *
@@ -66,20 +82,7 @@ std::pair<float, float> Physics::calculate_position(std::pair<float, float> posi
 
 	return new_position;
 }
-/**
-* @brief Updates the speed of a game object.
-*
-* The speed must be set to the game object to ensure that the changes will be reflected on the gameplay
-*
-* @param the GameObject instance that will have its speed updated
-* @return void.
-*/
-void Physics::update_speed(GameObject *game_object) {
-	std::pair<float, float> old_speed = game_object->get_speed();
-	std::pair<float, float> new_speed = calculate_speed(old_speed);
 
-	game_object->set_speed(new_speed);
-}
 /**
 * @brief Updates the position of a game object.
 *
@@ -95,6 +98,7 @@ void Physics::update_position(GameObject *game_object) {
 
 	game_object->set_position(new_position);
 }
+
 /**
 * @brief Updates speed and position of a game object.
 *
@@ -107,17 +111,7 @@ void Physics::act_on(GameObject *game_object) {
 	update_speed(game_object);
 	update_position(game_object);
 }
-/**
-* @brief Ensures that the game object will be affected by the physics engine.
-*
-* The object must me physicable to be affected by physical simulation
-*
-* @param the game object that will be affected
-* @return void.
-*/
-void Physics::add_physicable(GameObject *game_object) {
-	physicables.push_back(game_object);
-}
+
 /**
 * @brief Ensures that the physical actions will affect all active objects.
 *
@@ -135,6 +129,19 @@ void Physics::act() {
 		}
 	}
 }
+
+/**
+* @brief Ensures that the game object will be affected by the physics engine.
+*
+* The object must me physicable to be affected by physical simulation
+*
+* @param the game object that will be affected
+* @return void.
+*/
+void Physics::add_physicable(GameObject *game_object) {
+	physicables.push_back(game_object);
+}
+
 /**
 * @brief Getter method for gravity.
 *
