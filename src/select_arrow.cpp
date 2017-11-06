@@ -204,7 +204,6 @@ void SelectArrow::arrow_select(std::string event_name) {
 		default:
 			break;
 	}
-
 }
 
 /**

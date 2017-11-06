@@ -241,6 +241,49 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
 }
 
 /**
+ * @brief Load and show the hitbox on the screen.
+ *
+ * this method load an image and initialize as a hitbox.
+ *
+ * @return void.
+ */
+void Hitbox::initialize() {
+    INFO("Initializing all hitboxes");
+
+    /**<
+     * SDL_Surface. Structure that contains a collection of pixels and images of the surface.
+     */
+    SDL_Surface* loaded_surface = nullptr;
+    loaded_surface =
+     IMG_Load("../assets/images/scenes/test_scene/Fundo-Vermelho.jpg");
+
+    SDL_Texture* new_texture = nullptr; /**< SDL_Texture. A group of pixels. */
+
+    if (loaded_surface != NULL) {
+        /* if the surface image is loaded  */
+
+        INFO("Surfaces' loaded");
+
+        new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
+
+        if (new_texture == NULL) {
+            /* if the texture is null  */
+            INFO("Unable to create texture from! SDL Error: SDL_GetError()");
+        }
+        else {
+      		/* Do  nothing*/
+      	}
+
+        SDL_FreeSurface(loaded_surface);
+    }
+    else {
+  		/* Do  nothing*/
+  	}
+
+    return true;
+}
+
+/**
  * @brief Shows the image that was loaded and initialized on the screen
  *
  * @return void.
