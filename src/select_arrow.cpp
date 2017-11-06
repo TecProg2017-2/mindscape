@@ -99,6 +99,9 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 0;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
 
 		if (event_name == "UP") {
 			enable = false;
@@ -110,6 +113,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 3;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	if (enable == false) {
@@ -117,6 +126,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 			enable = true;
 			time = 0;
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	arrow_select(event_name);
@@ -146,6 +161,9 @@ void SelectArrow::arrow_select(std::string event_name) {
 			if (event_name == "ENTER") {
 				action->execute("../data/1.level.dat");
 			}
+			else {
+				/* Do  nothing*/
+			}
 			break;
 
 			//Instructions
@@ -154,6 +172,9 @@ void SelectArrow::arrow_select(std::string event_name) {
 
 			if (event_name == "ENTER") {
 				action->execute("../data/2.level.dat");
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
@@ -164,6 +185,9 @@ void SelectArrow::arrow_select(std::string event_name) {
 			if (event_name == "ENTER") {
 				action->execute("../data/credits_scene.dat");
 			}
+			else {
+				/* Do  nothing*/
+			}
 			break;
 
 			//Exit
@@ -172,9 +196,21 @@ void SelectArrow::arrow_select(std::string event_name) {
 
 			if (event_name == "ENTER") {
 			}
+			else {
+				/* Do  nothing*/
+			}
 			break;
 
 		default:
 			break;
 	}
 }
+
+/**
+ * @brief Updates the object state
+ *
+ * @return void
+ */
+void SelectArrow::update_state() {
+}
+

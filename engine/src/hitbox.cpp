@@ -159,6 +159,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the bottom of the hitbox a collides with the top of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (top_a >= bottom_b) {
         // INFO("Collision of top_a hitbox with bottom_b hitbox");
@@ -166,6 +169,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the top of the hitbox a collides with the bottom of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (right_a <= left_b) {
         // INFO("Collision of right_a hitbox with left_b hitbox ");
@@ -173,6 +179,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the right of the hitbox a collides with the left of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (left_a >= right_b) {
         // INFO("Collision of left_a hitbox with right_b hitbox ");
@@ -180,6 +189,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the left of the hitbox a collides with the right of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     return true;
 }
@@ -214,6 +226,9 @@ void Hitbox::initialize() {
             /* if the texture is null  */
             INFO("Unable to create texture from! SDL Error: SDL_GetError()");
         }
+        else {
+      		/* Do  nothing*/
+      	}
 
         SDL_FreeSurface(loaded_surface);
     }

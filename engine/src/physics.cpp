@@ -29,6 +29,9 @@ Physics *Physics::get_instance() {
 	if (!instance) {
 		instance = new Physics();
 	}
+	else {
+		/* Do  nothing*/
+	}
 
 	return instance;
 }
@@ -142,6 +145,9 @@ void Physics::act() {
 	for (auto game_object : physicables) {
 		if (game_object->is_active()) {
 			act_on(game_object);
+		}
+		else {
+			/* Do  nothing*/
 		}
 	}
 }
