@@ -28,7 +28,6 @@ const int game_object_key = 50;
  * @ param keyboard_events Events for each key configured.
  * @return list<GameEvent> List of keys that has an event associated.
  */
-
 std::list<GameEvent> Translator::keyboard_events_to_game_events(
     std::list<KeyboardEvent> keyboard_events) {
 

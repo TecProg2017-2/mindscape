@@ -59,6 +59,22 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 	}
 }
 
+
+/**
+* @brief Updates the speed of a game object.
+*
+* The speed must be set to the game object to ensure that the changes will be reflected on the gameplay
+*
+* @param the GameObject instance that will have its speed updated
+* @return void.
+*/
+void Physics::update_speed(GameObject *game_object) {
+	std::pair<float, float> old_speed = game_object->get_speed();
+	std::pair<float, float> new_speed = calculate_speed(old_speed);
+
+	game_object->set_speed(new_speed);
+}
+
 /**
 * @brief Calculates the position of an object.
 *
