@@ -41,17 +41,58 @@ Uncle::Uncle(
     	initialize_hitboxes();
     	initialize_animations();
     	initialize_audio_effects();
-	};
+};
 
 /**
- * @brief Initialize uncle's audio effects.
+ * @brief Creates Uncle's animation.
  *
- * Not implemented.
+ * Creates an animation to Uncle enemy.
  *
- * @return void.
+ * @param path Path to the image which contains the sprite sheet.
+ * @param sprite_lines Number of the lines on the sprite sheet.
+ * @param sprite_colums Number of colums on the sprite sheet.
+ * @param duration Time duration of animation.
+ * @param direction Direction of animation.
+ * @return This method returns Uncle's animation.
  */
 
-void Uncle::initialize_audio_effects() {
+engine::Animation* Uncle::create_animation(
+	std::string path,
+  	int sprite_lines,
+  	int sprite_columns,
+  	double duration,
+  	std::string direction) {
+    DEBUG("Creating animations.");
+
+  	engine::Game& game = engine::Game::get_instance(); /**< Game.
+    Gets an instance of a game just initializated. */
+
+    engine::Animation* animation = nullptr; /**< Animation.
+    Can represents all functions about uncle's animation. */
+
+    /* Initializes uncle's animation object. */
+    animation = new engine::Animation(
+    	  game.get_renderer(),
+    	  path,
+    	  false,
+    	  std::make_pair(0, 0),
+    	  1,
+    	  sprite_lines,
+    	  sprite_columns,
+    	  duration,
+    	  true,
+    	  direction
+  	);
+
+    /* Sets values to init a initial position of animation on the screen.*/
+  	animation->set_values(
+    	  std::make_pair(320, 320),
+    	  std::make_pair(320, 320),
+    	  std::make_pair(0, 0)
+  	);
+
+    DEBUG("Animations created.");
+  	return animation;
 }
 
 /**
@@ -105,62 +146,10 @@ void Uncle::initialize_animations() {
 
   	attacking_animation->in_loop = false;
 
- 	add_animation("attacking_animation",attacking_animation);
+   	add_animation("attacking_animation",attacking_animation);
 
     /* Ends debugger that represents the end of the method. */
     DEBUG("Animations initializated.");
-}
-
-/**
- * @brief Creates Uncle's animation.
- *
- * Creates an animation to Uncle enemy.
- *
- * @param path Path to the image which contains the sprite sheet.
- * @param sprite_lines Number of the lines on the sprite sheet.
- * @param sprite_colums Number of colums on the sprite sheet.
- * @param duration Time duration of animation.
- * @param direction Direction of animation.
- * @return This method returns Uncle's animation.
- */
-
-engine::Animation* Uncle::create_animation(
-	std::string path,
-  	int sprite_lines,
-  	int sprite_columns,
-  	double duration,
-  	std::string direction) {
-    DEBUG("Creating animations.");
-
-  	engine::Game& game = engine::Game::get_instance(); /**< Game.
-    Gets an instance of a game just initializated. */
-
-    engine::Animation* animation = nullptr; /**< Animation.
-    Can represents all functions about uncle's animation. */
-
-    /* Initializes uncle's animation object. */
-    animation = new engine::Animation(
-    	game.get_renderer(),
-    	path,
-    	false,
-    	std::make_pair(0, 0),
-    	1,
-    	sprite_lines,
-    	sprite_columns,
-    	duration,
-    	true,
-    	direction
-  	);
-
-    /* Sets values to init a initial position of animation on the screen.*/
-  	animation->set_values(
-    	std::make_pair(320, 320),
-    	std::make_pair(320, 320),
-    	std::make_pair(0, 0)
-  	);
-
-    DEBUG("Animations created.");
-  	return animation;
 }
 
 /**
@@ -182,11 +171,11 @@ void Uncle::initialize_hitboxes() {
     Initialize uncle's head hitbox. */
 
     head_hitbox = new engine::Hitbox(
-    	"head_hitbox",
-    	this->get_position(),
-    	std::make_pair(160, 380),
-    	std::make_pair(180,20),
-    	game.get_renderer()
+    	  "head_hitbox",
+    	  this->get_position(),
+    	  std::make_pair(160, 380),
+    	  std::make_pair(180,20),
+    	  game.get_renderer()
   	);
 
     /* Add hitbox component into the game object. */
@@ -213,6 +202,17 @@ void Uncle::initialize_state_map() {
 }
 
 /**
+ * @brief Initialize uncle's audio effects.
+ *
+ * Not implemented.
+ *
+ * @return void.
+ */
+
+void Uncle::initialize_audio_effects() {
+}
+
+/**
  * @brief Register game events.
  *
  * Register an event to Uncle.
@@ -233,14 +233,14 @@ void Uncle::on_event(GameEvent game_event) {
   		&& !engine::GameObject::on_limit_of_level) {
 
         /* The Uncle increments its actual position. */
-    	set_position_x(get_position_x() + 10);
+    	  set_position_x(get_position_x() + 10);
   	}
     /* Check if the Uncle gets an event to move to the right direction. */
   	else if (event_name == "MOVE_RIGHT"
   		&& !engine::GameObject::on_limit_of_level) {
 
         /* The Uncle decrements its actual position. */
-    	set_position_x(get_position_x() - 10);
+    	  set_position_x(get_position_x() - 10);
   	}
     else {
         /* Event name is not found. */
@@ -266,11 +266,69 @@ void Uncle::notify(engine::Observable *game_object) {
     /* Notify if little_girl exists, moving to her direction. */
     if (little_girl) {
         /* The Uncle moves in direction of the girl. */
-    	attack(little_girl);
+      	attack(little_girl);
   	}
     else {
-        /* Nothing to do. */
+        /* The Uncle don't attack. */
     }
+}
+
+/**
+ * @brief Event for the collision.
+ *
+ * Method called everytime when two game objects collides.
+ *
+ * @param other Other game object that collides.
+ * @param p_my_hitbox Hitbox that receives the collision.
+ * @param p_other_hitbox Hitbox that collided.
+ * @return void.
+ */
+
+void Uncle::on_collision(
+	engine::GameObject* other,
+	engine::Hitbox* p_my_hitbox,
+	engine::Hitbox* p_other_hitbox) {
+  	LittleGirl* little_girl = nullptr; /**< LittleGirl.
+    References to LittleGirl object. */
+    little_girl = dynamic_cast<LittleGirl *>(other);
+
+  	engine::Hitbox* my_hitbox = nullptr; /**< Hitbox.
+    References to Uncle's hitbox. */
+    my_hitbox = dynamic_cast<engine::Hitbox *>(p_my_hitbox);
+
+  	engine::Hitbox* other_hitbox = nullptr; /**< Hitbox.
+    References to girl's hitbox. */
+    other_hitbox = dynamic_cast<engine::Hitbox *>(p_other_hitbox);
+
+    /* Check if the girl is attacking the Uncle. */
+  	if (little_girl
+  		&& little_girl->get_state("ACTION_STATE") == "ATTACKING"
+  		&& my_hitbox->get_name() == "head_hitbox"
+  		&& little_girl->get_actual_animation()->actual_column == 2
+     	&& get_state("X_STATE") != little_girl->get_state("X_STATE")) {
+
+          /* Check if the Uncle is under attack. */
+          if(get_state("ACTION_STATE") == "ON_ATTACK") {
+              return;
+          }
+          else {
+              on_attack(other);
+          }
+  	}
+    else {
+        /* The girl is not attacking the Uncle. */
+    }
+}
+
+/**
+ * @brief Define a basic attack.
+ *
+ * Method not implemented.
+ *
+ * @return void.
+ */
+
+void Uncle::basic_attack(){
 }
 
 /**
@@ -292,7 +350,7 @@ void Uncle::attack(engine::GameObject* little_girl) {
 
   	if (actual_action_state == "DYING") {
         INFO("The Uncle is dying.");
-  		return;
+    		return;
   	}
     else {
         /* The Uncle stills alive. */
@@ -301,28 +359,17 @@ void Uncle::attack(engine::GameObject* little_girl) {
   	if (actual_action_state == "ON_ATTACK"
   		|| actual_action_state == "ATTACKING") {
 
-    	if (get_actual_animation()->is_finished) {
-      		states.set_state("ACTION_STATE","NORMAL");
-      		set_actual_animation(animations["idle_animation"]);
-    	}
-    	else {
-      		return;
-    	}
+        if (get_actual_animation()->is_finished) {
+            states.set_state("ACTION_STATE","NORMAL");
+            set_actual_animation(animations["idle_animation"]);
+        }
+        else {
+            return;
+        }
   	}
     else {
         /* The Uncle is in a idle state. */
     }
-}
-
-/**
- * @brief Define a basic attack.
- *
- * Method not implemented.
- *
- * @return void.
- */
-
-void Uncle::basic_attack(){
 }
 
 /**
@@ -339,8 +386,8 @@ void Uncle::on_attack(engine::GameObject *game_object) {
 
   	hit(game_object, 1);
   	if (is_alive()) {
-    	set_actual_animation(animations["on_attack_animation"]);
-    	//play_song("hit_me");
+    	  set_actual_animation(animations["on_attack_animation"]);
+    	  //play_song("hit_me");
   	}
     else {
         /* The Uncle is dead. */
@@ -361,59 +408,10 @@ void Uncle::die(engine::GameObject *game_object) {
   	std::string actual_x_state = ""; /**< String.
     Gets the actual state of the uncle. */
     actual_x_state = get_state("X_STATE");
-
     /* Sets a state that represents when uncle is dead. */
     states.set_state("ACTION_STATE", "DYING");
     /* Initiates the animation that show the uncle dying.*/
   	set_actual_animation(animations["dying_animation"]);
   	//play_song("hit_me");
     DEBUG("The uncle died.");
-}
-
-/**
- * @brief Event for the collision.
- *
- * Method called everytime when two game objects collides.
- *
- * @param other Other game object that collides.
- * @param p_my_hitbox Hitbox that receives the collision.
- * @param p_other_hitbox Hitbox that collided.
- * @return void.
- */
-
-void Uncle::on_collision(
-	engine::GameObject* other,
-	engine::Hitbox* p_my_hitbox,
-	engine::Hitbox* p_other_hitbox) {
-
-  	LittleGirl* little_girl = nullptr; /**< LittleGirl.
-    References to LittleGirl object. */
-    little_girl = dynamic_cast<LittleGirl *>(other);
-
-  	engine::Hitbox* my_hitbox = nullptr; /**< Hitbox.
-    References to Uncle's hitbox. */
-    my_hitbox = dynamic_cast<engine::Hitbox *>(p_my_hitbox);
-
-  	engine::Hitbox* other_hitbox = nullptr; /**< Hitbox.
-    References to girl's hitbox. */
-    other_hitbox = dynamic_cast<engine::Hitbox *>(p_other_hitbox);
-
-    /* Check if the girl is attacking the Uncle. */
-  	if (little_girl
-  		&& little_girl->get_state("ACTION_STATE") == "ATTACKING"
-  		&& my_hitbox->get_name() == "head_hitbox"
-  		&& little_girl->get_actual_animation()->actual_column == 2
-     	&& get_state("X_STATE") != little_girl->get_state("X_STATE")) {
-
-        /* Check if the Uncle is under attack. */
-      	if(get_state("ACTION_STATE") == "ON_ATTACK") {
-      		return;
-      	}
-	    else {
-	    	on_attack(other);
-  		}
-  	}
-    else {
-        /* The girl is not attacking the Uncle. */
-    }
 }

@@ -86,7 +86,6 @@ std::list<KeyboardEvent> EventHandler::pending_keyboard_events(unsigned now) {
 			/* increments the iterator */
 			++it;
 		}
-
 	}
 
 	if(!has_events) {

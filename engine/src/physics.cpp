@@ -11,7 +11,10 @@
 
 using namespace engine;
 
-float Physics::gravity = 1.0;
+const float Physics::gravity = 1.0;
+const float default_speed = 0.0;
+const float default_position = 0.0;
+
 Physics *Physics::instance = 0;
 std::vector<GameObject *> Physics::physicables = {};
 
@@ -42,13 +45,20 @@ Physics *Physics::get_instance() {
 * @return std::pair with the new speed.
 */
 std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) {
-	std::pair<float, float> new_speed (0.0, 0.0);
 
-	new_speed.first = speed.first;
-	new_speed.second = speed.second + gravity;
 
-	return new_speed;
+	if (speed.first > -1000 && speed.first < 1000 && speed.second > -1000 && speed.second < 1000) {
+		std::pair<float, float> new_speed (default_speed, default_speed);
+		new_speed.first = speed.first;
+		new_speed.second = speed.second + gravity;
+
+		return new_speed;
+	}
+	else {
+
+	}
 }
+
 
 /**
 * @brief Updates the speed of a game object.
@@ -75,12 +85,28 @@ void Physics::update_speed(GameObject *game_object) {
 * @return std::pair with the new position of the object.
 */
 std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
-	std::pair<float, float> new_position (0.0, 0.0);
 
-	new_position.first = position.first + speed.first;
-	new_position.second = position.second + speed.second;
+  	std::pair<float, float> new_position (default_position, default_position);
+  
+	  new_position.first = position.first + speed.first;
+		new_position.second = position.second + speed.second;
 
-	return new_position;
+		return new_position;
+}
+
+/**
+* @brief Updates the speed of a game object.
+*
+* The speed must be set to the game object to ensure that the changes will be reflected on the gameplay
+*
+* @param the GameObject instance that will have its speed updated
+* @return void.
+*/
+void Physics::update_speed(GameObject *game_object) {
+	std::pair<float, float> old_speed = game_object->get_speed();
+	std::pair<float, float> new_speed = calculate_speed(old_speed);
+
+	game_object->set_speed(new_speed);
 }
 
 /**
@@ -113,6 +139,18 @@ void Physics::act_on(GameObject *game_object) {
 }
 
 /**
+* @brief Ensures that the game object will be affected by the physics engine.
+*
+* The object must me physicable to be affected by physical simulation
+*
+* @param the game object that will be affected
+* @return void.
+*/
+void Physics::add_physicable(GameObject *game_object) {
+	physicables.push_back(game_object);
+}
+
+/**
 * @brief Ensures that the physical actions will affect all active objects.
 *
 * If the object is active, it must be affected by physical actions
@@ -128,18 +166,6 @@ void Physics::act() {
 			/* Do  nothing*/
 		}
 	}
-}
-
-/**
-* @brief Ensures that the game object will be affected by the physics engine.
-*
-* The object must me physicable to be affected by physical simulation
-*
-* @param the game object that will be affected
-* @return void.
-*/
-void Physics::add_physicable(GameObject *game_object) {
-	physicables.push_back(game_object);
 }
 
 /**
