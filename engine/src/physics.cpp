@@ -42,13 +42,20 @@ Physics *Physics::get_instance() {
 * @return std::pair with the new speed.
 */
 std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) {
-	std::pair<float, float> new_speed (default_speed, default_speed);
 
-	new_speed.first = speed.first;
-	new_speed.second = speed.second + gravity;
 
-	return new_speed;
+	if (speed.first > -1000 && speed.first < 1000 && speed.second > -1000 && speed.second < 1000) {
+		std::pair<float, float> new_speed (default_speed, default_speed);
+		new_speed.first = speed.first;
+		new_speed.second = speed.second + gravity;
+
+		return new_speed;
+	}
+	else {
+
+	}
 }
+
 /**
 * @brief Calculates the position of an object.
 *
@@ -59,13 +66,15 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 * @return std::pair with the new position of the object.
 */
 std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
-	std::pair<float, float> new_position (default_position, default_position);
 
-	new_position.first = position.first + speed.first;
-	new_position.second = position.second + speed.second;
+  	std::pair<float, float> new_position (default_position, default_position);
+  
+	  new_position.first = position.first + speed.first;
+		new_position.second = position.second + speed.second;
 
-	return new_position;
+		return new_position;
 }
+
 /**
 * @brief Updates the speed of a game object.
 *
@@ -80,6 +89,7 @@ void Physics::update_speed(GameObject *game_object) {
 
 	game_object->set_speed(new_speed);
 }
+
 /**
 * @brief Updates the position of a game object.
 *
@@ -95,6 +105,7 @@ void Physics::update_position(GameObject *game_object) {
 
 	game_object->set_position(new_position);
 }
+
 /**
 * @brief Updates speed and position of a game object.
 *
@@ -107,6 +118,7 @@ void Physics::act_on(GameObject *game_object) {
 	update_speed(game_object);
 	update_position(game_object);
 }
+
 /**
 * @brief Ensures that the game object will be affected by the physics engine.
 *
@@ -118,6 +130,7 @@ void Physics::act_on(GameObject *game_object) {
 void Physics::add_physicable(GameObject *game_object) {
 	physicables.push_back(game_object);
 }
+
 /**
 * @brief Ensures that the physical actions will affect all active objects.
 *
@@ -132,6 +145,7 @@ void Physics::act() {
 		}
 	}
 }
+
 /**
 * @brief Getter method for gravity.
 *
