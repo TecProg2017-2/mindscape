@@ -16,6 +16,50 @@
 using namespace engine;
 
 /**
+ * @brief Load and show the hitbox on the screen.
+ *
+ * this method load an image and initialize as a hitbox.
+ *
+ * @return void.
+ */
+void Hitbox::initialize() {
+    INFO("Initializing all hitboxes");
+
+    /**<
+     * SDL_Surface. Structure that contains a collection of pixels and images of the surface.
+     */
+    SDL_Surface* loaded_surface = nullptr;
+    loaded_surface =
+     IMG_Load("../assets/images/scenes/test_scene/Fundo-Vermelho.jpg");
+
+    SDL_Texture* new_texture = nullptr; /**< SDL_Texture. A group of pixels. */
+
+    if (loaded_surface != NULL) {
+        /* if the surface image is loaded  */
+
+        INFO("Surfaces' loaded");
+
+        new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
+
+        if (new_texture == NULL) {
+            /* if the texture is null  */
+            INFO("Unable to create texture from! SDL Error: SDL_GetError()");
+        }
+        else {
+          /* Do  nothing*/
+        }
+
+        SDL_FreeSurface(loaded_surface);
+    }
+    else {
+        /* print if the image surface is not loaded  */
+        INFO("Unable to load image");
+    }
+
+    texture = new_texture;
+}
+
+/**
  * @brief This method return the width and height of the hitbox.
  *
  * @return std::pair<int, int> Dimensions of the hitbox.
@@ -68,6 +112,15 @@ void Hitbox::set_displacement(std::pair<int, int> go_coordinates,
 }
 
 /**
+ * @brief This method gets the coordinates of the hitbox.
+ *
+ * @return Returns the position in axis X and Y of the hitbox.
+ */
+std::pair<int, int> Hitbox::get_coordinates() {
+    return std::make_pair(hitbox.x, hitbox.y);
+}
+
+/**
  * @brief Update the coordinate of the hitbox after its movement
  *
  * this method updates the coordinate of the hitbox based in the its
@@ -84,15 +137,6 @@ void Hitbox::update(std::pair<int, int> go_coordinates) {
      */
     hitbox.x = get_displacement().first + go_coordinates.first;
     hitbox.y = get_displacement().second + go_coordinates.second;
-}
-
-/**
- * @brief This method gets the coordinates of the hitbox.
- *
- * @return Returns the position in axis X and Y of the hitbox.
- */
-std::pair<int, int> Hitbox::get_coordinates() {
-    return std::make_pair(hitbox.x, hitbox.y);
 }
 
 /**
@@ -159,6 +203,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the bottom of the hitbox a collides with the top of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (top_a >= bottom_b) {
         // INFO("Collision of top_a hitbox with bottom_b hitbox");
@@ -166,6 +213,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the top of the hitbox a collides with the bottom of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (right_a <= left_b) {
         // INFO("Collision of right_a hitbox with left_b hitbox ");
@@ -173,6 +223,9 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the right of the hitbox a collides with the left of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     if (left_a >= right_b) {
         // INFO("Collision of left_a hitbox with right_b hitbox ");
@@ -180,49 +233,11 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the left of the hitbox a collides with the right of hitbox b */
         return false;
     }
+    else {
+  		/* Do  nothing*/
+  	}
 
     return true;
-}
-
-/**
- * @brief Load and show the hitbox on the screen.
- *
- * this method load an image and initialize as a hitbox.
- *
- * @return void.
- */
-void Hitbox::initialize() {
-    INFO("Initializing all hitboxes");
-
-    /**<
-     * SDL_Surface. Structure that contains a collection of pixels and images of the surface.
-     */
-    SDL_Surface* loaded_surface = nullptr;
-    loaded_surface =
-     IMG_Load("../assets/images/scenes/test_scene/Fundo-Vermelho.jpg");
-
-    SDL_Texture* new_texture = nullptr; /**< SDL_Texture. A group of pixels. */
-
-    if (loaded_surface != NULL) {
-        /* if the surface image is loaded  */
-
-        INFO("Surfaces' loaded");
-
-        new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
-
-        if (new_texture == NULL) {
-            /* if the texture is null  */
-            INFO("Unable to create texture from! SDL Error: SDL_GetError()");
-        }
-
-        SDL_FreeSurface(loaded_surface);
-    }
-    else {
-        /* print if the image surface is not loaded  */
-        INFO("Unable to load image");
-    }
-
-    texture = new_texture;
 }
 
 /**

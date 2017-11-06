@@ -11,7 +11,10 @@
 
 using namespace engine;
 
-float Physics::gravity = 1.0;
+const float Physics::gravity = 1.0;
+const float default_speed = 0.0;
+const float default_position = 0.0;
+
 Physics *Physics::instance = 0;
 std::vector<GameObject *> Physics::physicables = {};
 
@@ -26,6 +29,9 @@ Physics *Physics::get_instance() {
 	if (!instance) {
 		instance = new Physics();
 	}
+	else {
+		/* Do  nothing*/
+	}
 
 	return instance;
 }
@@ -39,8 +45,10 @@ Physics *Physics::get_instance() {
 * @return std::pair with the new speed.
 */
 std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) {
+
+
 	if (speed.first > -1000 && speed.first < 1000 && speed.second > -1000 && speed.second < 1000) {
-		std::pair<float, float> new_speed (0.0, 0.0);
+		std::pair<float, float> new_speed (default_speed, default_speed);
 		new_speed.first = speed.first;
 		new_speed.second = speed.second + gravity;
 
@@ -51,24 +59,6 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 	}
 }
 
-/**
-* @brief Calculates the position of an object.
-*
-* With speed, the position of the game objects must change.
-*
-* @param std::pair with the current position of the object
-* @param std::pair with the current speed of the object
-* @return std::pair with the new position of the object.
-*/
-std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
-	std::pair<float, float> new_position (0.0, 0.0);
-	
-		new_position.first = position.first + speed.first;
-		new_position.second = position.second + speed.second;
-
-		return new_position;
-
-}
 
 /**
 * @brief Updates the speed of a game object.
@@ -83,6 +73,25 @@ void Physics::update_speed(GameObject *game_object) {
 	std::pair<float, float> new_speed = calculate_speed(old_speed);
 
 	game_object->set_speed(new_speed);
+}
+
+/**
+* @brief Calculates the position of an object.
+*
+* With speed, the position of the game objects must change.
+*
+* @param std::pair with the current position of the object
+* @param std::pair with the current speed of the object
+* @return std::pair with the new position of the object.
+*/
+std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
+
+  	std::pair<float, float> new_position (default_position, default_position);
+  
+	  new_position.first = position.first + speed.first;
+		new_position.second = position.second + speed.second;
+
+		return new_position;
 }
 
 /**
@@ -137,6 +146,9 @@ void Physics::act() {
 	for (auto game_object : physicables) {
 		if (game_object->is_active()) {
 			act_on(game_object);
+		}
+		else {
+			/* Do  nothing*/
 		}
 	}
 }
