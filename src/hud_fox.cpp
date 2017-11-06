@@ -87,7 +87,7 @@ engine::Animation* HudFox::create_animation(
         default_in_loop,                 
         direction            
     );
-
+}
 /**
  * @brief Initiates Hud Fox's animation.  
  * 
