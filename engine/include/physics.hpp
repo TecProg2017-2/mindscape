@@ -28,7 +28,7 @@ namespace engine {
 
         static Physics *instance;
         static std::vector<GameObject *> physicables;
-        static float gravity;
+        static const float gravity;
 
         std::pair<float, float> calculate_speed(std::pair<float, float>);
         std::pair<float, float> calculate_position(std::pair<float, float>, std::pair<float, float>);

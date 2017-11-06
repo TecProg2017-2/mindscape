@@ -15,6 +15,9 @@
 using namespace engine;
 
 bool Translator::is_a_valid_event;
+const std::string game_object_default_name = "";
+const std::string game_object_name = "little_girl";
+const int game_object_key = 50;
 
 /**
  * @brief Create a list of GameEvent.
@@ -47,12 +50,12 @@ std::list<GameEvent> Translator::keyboard_events_to_game_events(
         }
 
         for (auto game_object : EventHandler::listeners) {
-            if ((game_object->name == "little_girl" && key == 50) 
+            if ((game_object->name == game_object_name && key == game_object_key) 
                 && (key_released)) {
                 continue;
             }
 
-            if (game_object->translations[key] != "" && !used_keys[key]) {
+            if (game_object->translations[key] != game_object_default_name && !used_keys[key]) {
                 auto game_event = GameEvent(
                     game_object->name,
                     game_object->translations[key],
