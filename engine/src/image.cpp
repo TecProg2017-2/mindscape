@@ -37,7 +37,6 @@ bool Image::load() {
 			/* if the texture is null */
             WARN("Unable to create texture");
         }
-
         else {
             /*Do nothing*/
         }
@@ -73,7 +72,6 @@ void Image::free() {
 		dimension_on_screen.first = 0;
 		dimension_on_screen.second = 0;
     }
-
     else {
         /*Do nothing*/
     }
@@ -90,7 +88,6 @@ void Image::free() {
  * @return
  */
 void Image::draw(int x, int y) {
-    DEBUG("Drawing image");
     SDL_Rect ret = {coordinatesOnTexture.first,
                     coordinatesOnTexture.second,
                     dimensionOnTexture.first,
