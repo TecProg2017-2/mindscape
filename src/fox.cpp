@@ -19,7 +19,7 @@
 using namespace mindscape;
 
 /**
- * @brief Class Contructor.  
+ * @brief Class Constructor.
  * 
  * Sets character fox's firsts informations (attributes' values).
  *  
@@ -229,6 +229,7 @@ engine::Animation* Fox::create_animation(
     );
 
     /* Set dimentions on screen and, coordinates and dimention on texture */
+    const
     animation->set_values(
         std::make_pair(120, 120),
         std::make_pair(120, 120),
@@ -275,7 +276,8 @@ void Fox::on_event(GameEvent game_event) {
         /* If the event is MOVE LEFT and the Fox is in state NORMAL */
 
         /* Makes the Fox move left */
-        set_position_x(get_position_x() + 10);
+        const int delta_movement = 10;
+        set_position_x(get_position_x() + delta_movement);
     }
 
     else if(event_name == "MOVE_RIGHT" && 
@@ -284,7 +286,8 @@ void Fox::on_event(GameEvent game_event) {
         /* If the event is MOVE RIGHT and the Fox is in state NORMAL */
 
         /* Makes the Fox move right */
-        set_position_x(get_position_x() - 10);
+        const int delta_movement = - 10;
+        set_position_x(get_position_x() - delta_movement);
     }
 
     else {
@@ -319,30 +322,34 @@ void Fox::move(engine::GameObject* girl) {
         states.set_state("X_STATE", "LOOKING_LEFT");
         distance_from_girl = fox_position - girl_position;
 
-        if(distance_from_girl <= 200) {
+        const int minimum_distance = 200;
+        const int move_distance = 400;
+        const int fast_move_distance = 400;
+
+        if(distance_from_girl <= minimum_distance) {
         /* If the distance from the girl is greater than 200 */
 
             /* Set new Fox's animation: idle to the left */
             set_actual_animation(animations["idle_left_animation"]);
-            set_speed_x(0);
+            const int fox_speed = 0;
+            set_speed_x(fox_speed);
         }
-
-        else if(distance_from_girl > 200 && distance_from_girl <= 400) {
+        else if(distance_from_girl > 200 && distance_from_girl <= move_distance) {
         /* If the distance from the girl is between 201 and 400 */
 
             /* Set new Fox's animation: running to the left */
             set_actual_animation(animations["running_left_animation"]);
-            set_speed_x(-10);
+            const int negative_fox_speed = -10;
+            set_speed_x(negative_fox_speed);
         }
-
-        else if(distance_from_girl > 400) {
+        else if(distance_from_girl > fast_move_distance) {
         /* If the distance from the girl is greater 400 */
 
             /* Set new Fox's animation: running to the left */
             set_actual_animation(animations["running_left_animation"]);
-            set_speed_x(-15);
+            const int fast_fox_movement = -15;
+            set_speed_x(fast_fox_movement);
         }
-
         else {
             /* Do nothing */
         }
@@ -591,19 +598,16 @@ void Fox::update_state() {
             /* Sets idle_right animation rigth */
             set_actual_animation(animations["idle_right_animation"]);
         }
-
         else if(actual_x_state == "LOOKING_LEFT") {
         /* If the Fox is looking left */
 
             /* Sets idle_right animation left */
             set_actual_animation(animations["idle_left_animation"]);
         }
-
         else {
             /* Do nothing */
         }
     }
-
     else {
         /* Do nothing */
     }
@@ -614,14 +618,12 @@ void Fox::update_state() {
         /* Sets state ON GROUND */
         states.set_state("Y_STATE", "ON_GROUND");
     }
-
     else if(get_speed_y() == 0.0) {
     /* If the speed in y coordinate is zero */
 
         /* Sets state FALLING */
         states.set_state("Y_STATE", "FALLING");
     }
-
     else {
         /* Do nothing */
     }
@@ -661,29 +663,23 @@ void Fox::on_collision(engine::GameObject* other,
         set_speed_y(0.0);
         set_position_y(other_hitbox->get_coordinates().second - 110);
     }
-
     else if(star) {
         /* If star is not null */
-    
         if(get_star_count() != 3) {
         /* If has not 3 stars */
-
             star->play_song("got_me"); /* Plays star sound effect */
             star->set_actual_animation(star->animations["star_fading"]); /* 
             Starts new animation */
             star->deactivate_components(); /* Deactivate star component */
             set_star_count(get_star_count() + 1); /* Incrementates star count */
         }
-
         else {
             /* Do nothing */
         }
     }
-
     else {
         /* Do nothing */
     }
-
 }
 
 
@@ -697,13 +693,11 @@ void Fox::on_collision(engine::GameObject* other,
  * @return void.
  */
 void Fox::notify(engine::Observable *game_object) {
-
     LittleGirl* little_girl = nullptr;
     little_girl = dynamic_cast<LittleGirl *>(game_object);
     
     if(little_girl) {
-    /* If the Little Girl exists */ 
-
+    /* If the Little Girl exists */
         INFO("Fox notify: Little Girl is NOT NULL");
 
         if(!little_girl->is_life_full() && get_star_count() == 3) {
@@ -713,18 +707,15 @@ void Fox::notify(engine::Observable *game_object) {
             must_give_hp_to_girl = false;
             animation_hud_fading = true;
         }
-
         else {
             /* Do nothing */
         }
-
 
         if(little_girl->get_position_y() + 70 == get_position_y()) {
             /* If the Little Girl's position is the same of the Fox */ 
 
             move(little_girl);
         }
-
         else if(little_girl && 
             little_girl->get_position_y() + 70 != get_position_y() &&
             little_girl->get_state("Y_STATE") == "ON_GROUND" && 
@@ -734,19 +725,16 @@ void Fox::notify(engine::Observable *game_object) {
             
             jump(little_girl);
         }
-
         else if(little_girl->get_state("Y_STATE") != "ON_GROUND" && 
             get_state("Y_STATE") == "ON_GROUND") {
             /* If the Little Girl's position is different
             from "Ground" and the Fox is on the ground */
             set_speed_x(0.0);
         }
-
         else {
             /* Do nothing */
         }
     }
-
     else {
         /* Do nothing */
        WARN("Fox notify(): Little Girl is NULL");
