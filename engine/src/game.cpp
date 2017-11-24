@@ -11,6 +11,7 @@
 #include "game.hpp"
 #include <unistd.h>
 #include "log.hpp"
+#include <assert.h>
 
 using namespace engine;
 
@@ -23,6 +24,7 @@ Game* Game::instance = NULL; /**< initialization of the game instance singleton 
  * @return void.
  */
 void throw_error(const char* function) {
+    assert(function);
     WARN(("Something's wrong in %s\n", function));
     exit(-1);
 }
@@ -36,14 +38,7 @@ void throw_error(const char* function) {
  */
 Game& Game::get_instance() {
     DEBUG("Getting instance of game");
-    if (!instance) {
-        /* if the instance is null */
-        WARN("Instance is null. Exiting.");
-        exit(1);
-    }
-    else {
-        /*Do nothing*/
-    }
+    assert(instance);
 
     return *instance;
 }
@@ -61,6 +56,7 @@ Game& Game::initialize(std::string p_name, std::pair<int, int> p_dimensions) {
         instance = new Game();
         instance->set_information(p_name, p_dimensions);
         instance->init();
+        assert(instance);
     }
     else {
         /*Do nothing*/
@@ -79,7 +75,7 @@ Game& Game::initialize(std::string p_name, std::pair<int, int> p_dimensions) {
  */
 void Game::init() {
     int img_flags = IMG_INIT_PNG; /**< flags for sdl image lib */
-
+    
     if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) < 0) {
         /* if the initialization of the video and audio doesn't work properly */
         WARN("Audio and video not initialized properly");
@@ -150,6 +146,7 @@ void Game::init() {
  */
 void Game::load_media() {
     actual_scene->load();
+    assert(actual_scene);
     loaded_media = true;
 }
 
@@ -159,6 +156,7 @@ void Game::load_media() {
  * @return Returns the situation of media.
  */
  bool Game::is_media_loaded() {
+    assert(loaded_media == 1 || loaded_media == 0);
     return loaded_media;
 }
 
@@ -192,6 +190,9 @@ void Game::close() {
  * @return void.
  */
 void renderScreen(SDL_Renderer* renderer, Scene* actual_scene) {
+    assert(renderer);
+    assert(actual_scene);
+
     const Uint8 r_value = 0xE2;
     const Uint8 g_value = 0xAC;
     const Uint8 b_value = 0xF3;
@@ -219,6 +220,8 @@ void Game::run() {
         SDL_Event e;
 
         EventHandler event_handler = EventHandler();
+
+        assert(event_handler);
 
         Time::init();
 
@@ -254,6 +257,8 @@ void Game::run() {
  * @return void.
  */
 void Game::set_information(std::string p_name,std::pair<int,int> p_dimensions) {
+    assert(p_dimensions.first >= 0 && p_dimensions.second >= 0);
+
     set_name(p_name);
     set_window_dimensions(p_dimensions);
 }
@@ -268,6 +273,7 @@ void Game::set_information(std::string p_name,std::pair<int,int> p_dimensions) {
  * @return void.
  */
 void Game::change_scene(Scene *level) {
+    /*Function core*/
     DEBUG("Changing scene");
     if (actual_scene) {
 		/* if actual scene is not null */
@@ -279,6 +285,7 @@ void Game::change_scene(Scene *level) {
         /*Do nothing*/
     }
 
+    /*Modifies referenced parameter*/
     level->activate();
     actual_scene = level;
     load_media();
@@ -292,6 +299,7 @@ void Game::change_scene(Scene *level) {
  *
  */
  Scene* Game::get_actual_scene() {
+    assert(actual_scene);
     return actual_scene;
 }
 
@@ -307,8 +315,11 @@ void Game::change_scene(Scene *level) {
  * @param integer containing the quantity of the Alpha (A) opacity.
  * @return void.
  */
-bool RGBA_color_is_valid(int R, int G, int B, int A) {
+bool Game::RGBA_color_is_valid(int R, int G, int B, int A) {
+    /*Variables declaration*/
     bool color_is_valid = true;
+
+    /*Function core*/
     if (R < 0 || R > 255) {
         /*Given value for red channel is out of limits, therefore, invalid*/
         color_is_valid = false;
@@ -345,9 +356,8 @@ bool RGBA_color_is_valid(int R, int G, int B, int A) {
  * @return void.
  */
 void Game::set_game_background_color(int R, int G, int B, int A) {
-
     if (RGBA_color_is_valid(R, G, B, A)) {
-        /*Ensures that the color values given are valid*/ 
+        /*Ensures that the color values given are valid*/
         game_background_color = Color(R, G, B, A);
     }
 }

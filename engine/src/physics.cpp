@@ -8,6 +8,7 @@
 * https://github.com/TecProg2017-2/mindscape/blob/master/LICENSE.md
 */
 #include "physics.hpp"
+#include <assert.h>
 
 using namespace engine;
 
@@ -29,10 +30,8 @@ Physics *Physics::get_instance() {
 	if (!instance) {
 		instance = new Physics();
 	}
-	else {
-		/* Do  nothing*/
-	}
-
+	assert(instance);
+  
 	return instance;
 }
 
@@ -61,6 +60,26 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 
 
 /**
+* @brief Calculates the position of an object.
+*
+* With speed, the position of the game objects must change.
+*
+* @param std::pair with the current position of the object
+* @param std::pair with the current speed of the object
+* @return std::pair with the new position of the object.
+*/
+std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
+	std::pair<float, float> new_position (0.0, 0.0);
+	
+	new_position.first = position.first + speed.first;
+	new_position.second = position.second + speed.second;
+
+	return new_position;
+
+}
+
+
+/**
 * @brief Updates the speed of a game object.
 *
 * The speed must be set to the game object to ensure that the changes will be reflected on the gameplay
@@ -69,6 +88,8 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 * @return void.
 */
 void Physics::update_speed(GameObject *game_object) {
+	assert(game_object);
+
 	std::pair<float, float> old_speed = game_object->get_speed();
 	std::pair<float, float> new_speed = calculate_speed(old_speed);
 
@@ -103,6 +124,8 @@ std::pair<float, float> Physics::calculate_position(std::pair<float, float> posi
 * @return void.
 */
 void Physics::update_position(GameObject *game_object) {
+	assert(game_object);
+
 	std::pair<float, float> speed = game_object->get_speed();
 	std::pair<float, float> old_position = game_object->get_position();
 	std::pair<float, float> new_position = calculate_position(old_position, speed);
@@ -119,6 +142,8 @@ void Physics::update_position(GameObject *game_object) {
 * @return void.
 */
 void Physics::act_on(GameObject *game_object) {
+	assert(game_object);
+
 	update_speed(game_object);
 	update_position(game_object);
 }
@@ -132,6 +157,8 @@ void Physics::act_on(GameObject *game_object) {
 * @return void.
 */
 void Physics::add_physicable(GameObject *game_object) {
+	assert(game_object);
+
 	physicables.push_back(game_object);
 }
 
@@ -161,5 +188,6 @@ void Physics::act() {
 * @return float with the gravity value.
 */
 float Physics::get_gravity() {
+	assert(gravity >= 0);
 	return gravity;
 }

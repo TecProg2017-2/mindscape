@@ -13,6 +13,7 @@
 #include <string>
 #include <iostream>
 #include "../include/log.hpp"
+#include <assert.h>
 
 using namespace engine;
 
@@ -41,10 +42,12 @@ Audio::Audio(
  */
 bool Audio::load() {
     timer->init();
+    assert(timer != NULL);
 
     if (m_audio_type == MUSIC) {
     /* Separate MUSIC from  CHUNK */
         audio_music = Mix_LoadMUS(audio_path.c_str());
+        assert(audio_music != "");
 
         if (!audio_music) {
         /* Verifys if music is not an null object */
@@ -60,6 +63,7 @@ bool Audio::load() {
     else if (m_audio_type == CHUNK) {
     /* Separate CHUNK from  MUSIC*/
         audio_chunk = Mix_LoadWAV(audio_path.c_str());
+        assert(audio_chunk != "");
 
         if (!audio_chunk) {
         /* Verifys if chuck is not an null object */
@@ -192,7 +196,15 @@ void Audio::play_music_type() {
 
         if (Mix_PlayingMusic() == 0) {
         /* Verification to know if will play or resume music */
-            Mix_PlayMusic(audio_music, 0 );
+
+            const int fade_time = 500;
+
+            if(Mix_FadeInMusic(audio_music, 0, fade_time)==-1) {
+                INFO("Fade in is finished.");
+            } else {
+                /* Applies the fade in to starts the music. */
+            }
+
             DEBUG("Music is being played");
         }
         else if (Mix_PlayingMusic() == 1) {
@@ -220,6 +232,14 @@ void Audio::pause_music() {
     if (m_audio_type == MUSIC && Mix_PlayingMusic()) {
     /* Case is a music and is playing it, it can be paused here */
         Mix_PauseMusic();
+
+        /* Constants to define the fade time and the delay of the fade. */
+        const int fade_time = 500;
+        const int delay = 100;
+
+        while(!Mix_FadeOutMusic(fade_time) && Mix_PlayingMusic()) {
+            SDL_Delay(delay);
+        }
         DEBUG("Music is being paused");
     }
     else {
@@ -236,6 +256,8 @@ void Audio::pause_music() {
  * @return void.
  */
 void Audio::set_repetitions(int repeat) {
+    assert(repeat >= 0);
+
     if (audio_music != NULL) {
     /* Validates if music is not a null object */
         audio_repeat = repeat;
@@ -255,6 +277,8 @@ void Audio::set_repetitions(int repeat) {
  * @return void.
  */
 void Audio::set_duration(float duration) {
+    assert(duration >= 0);
+
     effect_duration = 0;
     effect_duration = duration * 1000;
     DEBUG(("Function: %s - effect_duration: %f", __func__, effect_duration));
