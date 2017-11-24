@@ -70,9 +70,11 @@ engine::Animation* Scorpion::create_animation(
     std::string direction){
     DEBUG("Creating animations.");
 
+    /* Object declaration. */
     engine::Game& game = engine::Game::get_instance(); /**< Game.
     Gets an instance of a game just initializated. */
 
+    /* Object declaration. */
     engine::Animation* animation = nullptr; /**< Animation.
     Can represents all functions about scorpion's animation. */
 
@@ -90,11 +92,17 @@ engine::Animation* Scorpion::create_animation(
         direction
     );
 
+
     /* Sets values to init a initial position of animation on the screen.*/
+
+    /* Constant declaration. */
     const int size_on_screen = 320;
+    /* Constant declaration. */
     const int size_of_texture = 320;
 
+    /* Constant declaration. */
     const int coordinates_x = 0;
+    /* Constant declaration. */
     const int coordinates_y = 0;
 
     animation->set_values(
@@ -139,10 +147,14 @@ void Scorpion::initialize_animations() {
  */
 
 void Scorpion::initialize_walking_animations(){
+    /* Constant declaration. */
     const int walking_sprite_lines = 1;
+    /* Constant declaration. */
     const int walking_sprite_columns = 5;
+    /* Constant declaration. */
     const double walking_duration = 0.9;
 
+    /* Object declaration. */
     engine::Animation* walking_left_animation = nullptr; /**< Animation.
     Animation that represents scorpion's walk to the left. */
 
@@ -155,6 +167,7 @@ void Scorpion::initialize_walking_animations(){
     /* Adds scorpion's walk animation to the left. */
     add_animation("walking_left_animation", walking_left_animation);
 
+    /* Object declaration. */
     engine::Animation* walking_right_animation = nullptr; /**< Animation.
     Animation that represents scorpion's walk to the right. */
 
@@ -181,6 +194,7 @@ void Scorpion::initialize_walking_animations(){
  */
 
 void Scorpion::activate_idle_animation(engine::Animation* idle_right_animation){
+    /* Function core. */
     /* Sets scorpion's idle animation to define when its stopped. */
     idle_right_animation->activate();
     set_actual_animation(idle_right_animation);
@@ -196,12 +210,18 @@ void Scorpion::activate_idle_animation(engine::Animation* idle_right_animation){
  */
 
 void Scorpion::initialize_idle_animations(){
+    /* Constant declaration. */
     const int idle_sprite_lines = 1;
+    /* Constant declaration. */
     const int idle_sprite_columns = 2;
+    /* Constant declaration. */
     const double idle_duration = 0.9;
 
+    /* Object declaration. */
     engine::Animation* idle_left_animation = nullptr; /**< Animation.
     Animation that represents scorpion's idle to the left. */
+
+    /* Function core. */
 
     /* Creates scorpion's idle animation to the left. */
     idle_left_animation = create_animation(
@@ -212,6 +232,7 @@ void Scorpion::initialize_idle_animations(){
     /* Adds scorpion's idle animation to the left. */
     add_animation("idle_left_animation", idle_left_animation);
 
+    /* Object declaration. */
     engine::Animation* idle_right_animation = nullptr; /**< Animation.
     Animation that represents scorpion's idle to the right. */
 
@@ -237,12 +258,18 @@ void Scorpion::initialize_idle_animations(){
  */
 
 void Scorpion::initialize_on_attack_animations(){
+    /* Constant declaration. */
     const int on_attack_sprite_lines = 1;
+    /* Constant declaration. */
     const int on_attack_sprite_columns = 2;
+    /* Constant declaration. */
     const double on_attack_duration = 0.8;
 
+    /* Object declaration. */
     engine::Animation* on_attack_left_animation = nullptr; /**< Animation.
     Animation that represents scorpion's on attack to the left.  */
+
+    /* Function core. */
 
     /* Creates scorpion's animation to the left, when it take some damage. */
     on_attack_left_animation = create_animation(
@@ -254,6 +281,7 @@ void Scorpion::initialize_on_attack_animations(){
     /* Adds scorpion's under attack animation to the left. */
     add_animation("on_attack_left_animation", on_attack_left_animation);
 
+    /* Object declaration. */
     engine::Animation* on_attack_right_animation = nullptr; /**< Animation.
     Animation that represents scorpion's on attack to the right. */
 
@@ -278,10 +306,14 @@ void Scorpion::initialize_on_attack_animations(){
  */
 
 void Scorpion::initialize_attacking_animations(){
+    /* Constant declaration. */
     const int attacking_sprite_lines = 1;
+    /* Constant declaration. */
     const int attacking_sprite_columns = 5;
+    /* Constant declaration. */
     const double attacking_duration = 0.7;
 
+    /* Object declaration. */
     engine::Animation* attacking_left_animation = nullptr; /**< Animation.
      Animation that represents scorpion's attack to the left. */
 
@@ -295,6 +327,7 @@ void Scorpion::initialize_attacking_animations(){
     /* Adds scorpion's attacking animation to the left. */
     add_animation("attacking_left_animation", attacking_left_animation);
 
+    /* Object declaration. */
     engine::Animation* attacking_right_animation = nullptr; /**< Animation.
     Animation that represents scorpion's attack to the right. */
 
@@ -310,15 +343,18 @@ void Scorpion::initialize_attacking_animations(){
 }
 
 /**
+ * @brief Define Scorpion's final left animation
  *
+ * Sets the dying left animation as the final left animation.
  *
- *
- *
+ * @param dying_left_animation animation object which contains a dying
+ * animation.
  *
  * @return void.
  */
 
 void define_final_left_animation(engine::Animation* dying_left_animation){
+    /* Function core. */
     /* Initialize booleans that references the scorpion's death animation
     process, to the left. */
     dying_left_animation->is_a_final_animation = true;
@@ -338,6 +374,7 @@ void define_final_left_animation(engine::Animation* dying_left_animation){
  */
 
 void define_final_right_animation(engine::Animation* dying_right_animation){
+    /* Function core. */
     /* Initialize booleans that references the scorpion's death animation
     process, to the right. */
     dying_right_animation->is_a_final_animation = true;
@@ -353,10 +390,14 @@ void define_final_right_animation(engine::Animation* dying_right_animation){
  */
 
 void Scorpion::initialize_dying_animations(){
+    /* Constant declaration. */
     const int dying_sprite_lines = 1;
+    /* Constant declaration. */
     const int dying_sprite_columns = 5;
+    /* Constant declaration. */
     const double dying_duration = 0.8;
 
+    /* Object declaration. */
     engine::Animation* dying_left_animation = nullptr; /**< Animation.
     Animation that represents scorpion's death to the left. */
 
@@ -371,6 +412,7 @@ void Scorpion::initialize_dying_animations(){
     /* Adds scorpion's dying animation to the left. */
     add_animation("dying_left_animation", dying_left_animation);
 
+    /* Object declaration. */
     engine::Animation* dying_right_animation = nullptr; /**< Animation.
     Animation that represents scorpion's death to the right. */
 
@@ -398,9 +440,11 @@ void Scorpion::initialize_as_physicable() {
     /* Starts debugger to accompany the method's development. */
     DEBUG("Initializing scorpion as physicable.");
 
+    /* Object declaration. */
     engine::Physics *physics = nullptr; /**< Physics.
     Gets a physics instance to scorpion of a game just initialized. */
 
+    /* Function core. */
     /* Changes physics of an object catched by an instance,
     turning it collidable. */
     physics = engine::Physics::get_instance();
@@ -423,9 +467,11 @@ void Scorpion::initialize_as_physicable() {
  */
 
 void Scorpion::initialize_scorpion_hitbox(engine::Game game){
+    /* Variable declaration. */
     engine::Hitbox* scorpion_hitbox = nullptr; /**< Hitbox.
     Initialize scorpion's hitbox with its height and width. */
 
+    /* Function core. */
     scorpion_hitbox = new engine::Hitbox(
         "scorpion_hitbox",
         this->get_position(),
@@ -450,9 +496,11 @@ void Scorpion::initialize_scorpion_hitbox(engine::Game game){
  */
 
 void Scorpion::initialize_scorpion_attack_hitbox(engine::Game game){
+    /* Variable declaration. */
     engine::Hitbox* scorpion_attack = nullptr; /**< Hitbox.
     Initialize scorpion's hitbox when its attack. */
 
+    /* Function core. */
     scorpion_attack = new engine::Hitbox(
         "scorpion_attack",
         this->get_position(),
@@ -461,7 +509,7 @@ void Scorpion::initialize_scorpion_attack_hitbox(engine::Game game){
         game.get_renderer()
     );
 
-    /* Adds scorpion's attack hitbox component .*/
+    /* Adds scorpion's attack hitbox component. */
     add_component(scorpion_attack);
 }
 
@@ -477,9 +525,11 @@ void Scorpion::initialize_hitboxes() {
     /* Starts debugger to accompany the method's development. */
     DEBUG("Initializing scorpion's hitbox.");
 
+    /* Object declaration. */
     engine::Game& game = engine::Game::get_instance(); /**< Game.
     Gets an instance of a game just initializated. */
 
+    /* Function core. */
     initialize_scorpion_hitbox(game);
     initialize_scorpion_attack_hitbox(game);
 
@@ -498,6 +548,9 @@ void Scorpion::initialize_hitboxes() {
 void Scorpion::initialize_state_map() {
     /* Starts debugger to accompany the method's development. */
     DEBUG("Initializing scorpion's state.");
+
+    /* Function core. */
+
     /* Sets a normal state to scorpion's states. */
     states.set_state("ACTION_STATE", "NORMAL");
     /* Ends debugger that represents the end of the method. */
@@ -514,8 +567,11 @@ void Scorpion::initialize_state_map() {
  */
 
 void Scorpion::initialize_scorpion_attacking_audio(){
+    /* Object declaration. */
     engine::Audio * scorpion_attacking = nullptr; /**< Audio.
     Sound that represents when scorpion is attacking. */
+
+    /* Function core. */
 
     /* Creates scorpion's sound when it's attacking. */
     scorpion_attacking = new engine::Audio(
@@ -541,6 +597,7 @@ void Scorpion::initialize_scorpion_attacking_audio(){
  */
 
 void set_duration_scorpion_attacking(engine::Audio* scorpion_attacking){
+    /* Constant declaration. */
     const double duration_attacking = 0.7;
 
     /* Sets the duration of sound when it's attacking. */
@@ -556,8 +613,11 @@ void set_duration_scorpion_attacking(engine::Audio* scorpion_attacking){
  */
 
 void Scorpion::initialize_scorpion_on_attack_audio(){
+    /* Object declaration. */
     engine::Audio * scorpion_on_attack = nullptr; /**< Audio.
     Sound that represents when scorpion is on attack. */
+
+    /* Function core. */
 
     /* Creates scorpion's sound when it's hitted. */
     scorpion_on_attack = new engine::Audio(
@@ -583,7 +643,10 @@ void Scorpion::initialize_scorpion_on_attack_audio(){
  */
 
 void set_duration_scorpion_on_attack(engine::Audio* scorpion_on_attack){
+    /* Constant declaration. */
     const double on_attack_duration = 0.8;
+
+    /* Function core. */
 
     /* Sets the duration of sound when it's hitted. */
     scorpion_on_attack->set_duration(on_attack_duration);
@@ -600,6 +663,8 @@ void set_duration_scorpion_on_attack(engine::Audio* scorpion_on_attack){
 void Scorpion::initialize_audio_effects() {
     /* Starts debugger to accompany the method's development. */
     DEBUG("Initializing audio effects.");
+
+    /* Function core. */
 
     initialize_scorpion_attacking_audio();
     initialize_scorpion_on_attack_audio();
@@ -618,15 +683,18 @@ void Scorpion::initialize_audio_effects() {
  */
 
 void Scorpion::on_event(GameEvent game_event) {
+    /* Variable declaration. */
     std::string event_name = ""; /**< String.
     Gets an event catched by the scorpion. */
 
     /* Gets event related with the scorpion. */
     event_name = game_event.game_event_name;
 
+    /* Variable declaration. */
     int actual_position = 0; /**< Integer.
     Define the actual position of the scorpion on the screen. */
 
+    /* Constant declaration. */
     const int distance_to_move = 10;
 
     /* Check if the scorpion gets an event to move to the left direction. */
@@ -662,10 +730,13 @@ void Scorpion::on_event(GameEvent game_event) {
  */
 
 void Scorpion::notify(engine::Observable *game_object) {
+    /* Object declaration. */
     LittleGirl* little_girl = nullptr; /**< LittleGirl.
     Gets as observable that tells when little_girl is next. */
 
     little_girl = dynamic_cast<LittleGirl *>(game_object);
+
+    /* Function core. */
 
     /* Notify if little_girl exists, moving to her direction. */
     if (little_girl) {
@@ -691,8 +762,10 @@ void Scorpion::notify(engine::Observable *game_object) {
 
 void Scorpion::verifies_same_nivel(float scorpion_position_y,
     float girl_position_y){
+    /* Constant declaration. */
     const int height_difference = 132;
 
+    /* Function core. */
     /* Verifies if the scorpion and the girl is at the same height. */
     if (scorpion_position_y + height_difference == girl_position_y) {
         /* The scorpion is in the same position that the girl. */
@@ -713,6 +786,7 @@ void Scorpion::verifies_same_nivel(float scorpion_position_y,
  */
 
 void Scorpion::verifies_actual_animation(){
+    /* Function core. */
     /* Verifies if the actual animation of the scorpion is finished. */
     if(get_actual_animation()->is_finished) {
         /* Set scorpion's actual state with a normal state. */
@@ -739,6 +813,9 @@ void Scorpion::verifies_actual_animation(){
 
 void Scorpion::verifies_left_distance_from_girl(int distance_from_girl,
     const int left_vision_area){
+
+    /* Function core. */
+
     /* Check if the girl is next or far away to the scorpion. */
     if (distance_from_girl >= left_vision_area) {
         /* Updates the X position of the scorpion, making it walking.*/
@@ -775,6 +852,8 @@ void Scorpion::verifies_left_distance_from_girl(int distance_from_girl,
 
 void Scorpion::verifies_right_distance_from_girl(int distance_from_girl,
     const int right_vision_area){
+    /* Function core. */
+
     /* Check if the girl is in the fields vision of the scorpion. */
     if (distance_from_girl >= right_vision_area) {
         /* Updates the X position of the scorpion, making it walking.*/
@@ -806,9 +885,11 @@ void Scorpion::verifies_right_distance_from_girl(int distance_from_girl,
 
 void Scorpion::move(engine::GameObject* girl) {
     /* Gets Y positions of the scorpion and of the girl. */
+    /* Variable declaration. */
     float scorpion_position_y = 0;
     scorpion_position_y = get_position_y();
 
+    /* Variable declaration. */
     float girl_position_y = 0;
     girl_position_y = girl->get_position_y();
 
@@ -832,15 +913,20 @@ void Scorpion::move(engine::GameObject* girl) {
         /* The scorpion isn't under attack. */
     }
 
+    /* Variable declaration. */
     /* Gets X positions of the scorpion and of the girl and initializes
     they distance between them. */
     int distance_from_girl = 0;
 
+    /* Variable declaration. */
     float scorpion_position = 0;
     scorpion_position = get_position_x();
 
+    /* Variable declaration. */
     float girl_position = 0;
     girl_position = girl->get_position_x();
+
+    /* Function core. */
 
     /* Verifies the scorpion position on the X axis to define
     the scorpion's state. */
@@ -850,6 +936,7 @@ void Scorpion::move(engine::GameObject* girl) {
         /* Calculates the distance between the scorpion and the girl. */
         distance_from_girl = scorpion_position - girl_position;
 
+        /* Constants declaration. */
         const int max_left_area = 300;
         const int left_vision_area = 50;
 
@@ -872,6 +959,7 @@ void Scorpion::move(engine::GameObject* girl) {
         states.set_state("X_STATE","LOOKING_RIGHT");
         distance_from_girl = girl_position - scorpion_position;
 
+        /* Constants declaration. */
         const int max_right_area = 588;
         const int right_vision_area = 200;
 
@@ -903,24 +991,31 @@ void Scorpion::on_collision(
     engine::GameObject* other,
     engine::Hitbox* p_my_hitbox,
     engine::Hitbox* p_other_hitbox) {
+    /* Variable declaration. */
     Platform* platform = nullptr; /**< Platform.
     References the map where is happening the collision. */
     platform = dynamic_cast<Platform *>(other);
 
+    /* Variable declaration. */
     LittleGirl* little_girl = nullptr; /**< LittleGirl.
     References to LittleGirl object. */
     little_girl = dynamic_cast<LittleGirl *>(other);
 
+    /* Variable declaration. */
     engine::Hitbox* my_hitbox = nullptr; /**< Hitbox.
     References to scorpion's hitbox. */
     my_hitbox = dynamic_cast<engine::Hitbox *>(p_my_hitbox);
 
+    /* Variable declaration. */
     engine::Hitbox* other_hitbox = nullptr; /**< Hitbox.
     References to girl's hitbox. */
     other_hitbox = dynamic_cast<engine::Hitbox *>(p_other_hitbox);
 
+    /* Constants declaration. */
     const double stop_speed = 0.0;
     const int plataform_height = 312;
+
+    /* Function core. */
 
     /* Check if the scorpion and the girl are on collision. */
     if (get_speed_y() >= 0
@@ -969,8 +1064,12 @@ void Scorpion::attack() {
     DEBUG("The scorpion is attacking.");
     /* Sets a state that represents when scorpion is attacking. */
     states.set_state("ACTION_STATE","ATTACKING");
+
+    /* Variable declaration. */
     std::string actual_x_state = ""; /**< String.
     Gets the actual state of the scorpion. */
+
+    /* Function core. */
 
     actual_x_state = get_state("X_STATE");
 
@@ -1010,16 +1109,20 @@ void Scorpion::on_attack(GameObject *game_object) {
     DEBUG("The scorpion is under attack.");
     /* Sets a state that represents when scorpion is under attack. */
     states.set_state("ACTION_STATE","ON_ATTACK");
+
+    /* Variable declaration. */
     std::string actual_x_state = ""; /**< String.
     Gets the actual state of the scorpion. */
 
     actual_x_state = get_state("X_STATE");
 
+    /* Constant declaration. */
     /* Damage received by the scorpion. */
     const int damage = 15;
     hit(game_object, damage);
     INFO("The scorpion take 15 of damage.");
 
+    /* Function core. */
     /* Verifies if the scorpion is alive. */
     if (is_alive()) {
         /* Condition that verifies if the scorpion is looking to the left. */
@@ -1063,8 +1166,11 @@ void Scorpion::on_attack(GameObject *game_object) {
 void Scorpion::die(engine::GameObject *game_object) {
     DEBUG("The scorpion is dying.");
 
+    /* Variable declaration. */
     std::string actual_x_state = ""; /**< String.
     Gets the actual state of the scorpion. */
+
+    /* Function core. */
 
     actual_x_state = get_state("X_STATE");
 
