@@ -35,12 +35,17 @@ void MusicPlayer::update_state() {
         time += timer->time_elapsed() - time_aux;
         time_aux = timer->time_elapsed();
 
+        /* Constant declaration. */
+        const music_volumn = 30;
+
         /* Set the music volumn of the intro song in 30. */
         set_music_volume("intro_level_1", 30);
 
         /* Set the music volumn of the loop level 1 in 30. */
         set_music_volume("loop_level_1", 30);
 
+
+        /* Function core. */
         if (time < 25850) {
             /* Play intro level 1 song. */
             play_song("intro_level_1");
@@ -52,7 +57,7 @@ void MusicPlayer::update_state() {
                 while(!Mix_FadeOutMusic(500) && Mix_PlayingMusic()) {
                     SDL_Delay(100);
                 }
-                
+
                 passed = false;
             }
             else {
@@ -99,6 +104,7 @@ void MusicPlayer::update_state() {
  * @return void
  */
 void MusicPlayer::on_event(GameEvent game_event) {
+    /* Variable declaration. */
     std::string event_name = "";
     event_name = game_event.game_event_name;
 
