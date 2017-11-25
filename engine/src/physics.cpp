@@ -12,7 +12,10 @@
 
 using namespace engine;
 
-float Physics::gravity = 1.0;
+const float Physics::gravity = 1.0;
+const float default_speed = 0.0;
+const float default_position = 0.0;
+
 Physics *Physics::instance = 0;
 std::vector<GameObject *> Physics::physicables = {};
 
@@ -27,6 +30,7 @@ Physics *Physics::get_instance() {
 	if (!instance) {
 		instance = new Physics();
 	}
+	
 	assert(instance);
 
 	return instance;
@@ -41,8 +45,10 @@ Physics *Physics::get_instance() {
 * @return std::pair with the new speed.
 */
 std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) {
+
+
 	if (speed.first > -1000 && speed.first < 1000 && speed.second > -1000 && speed.second < 1000) {
-		std::pair<float, float> new_speed (0.0, 0.0);
+		std::pair<float, float> new_speed (default_speed, default_speed);
 		new_speed.first = speed.first;
 		new_speed.second = speed.second + gravity;
 
@@ -147,6 +153,9 @@ void Physics::act() {
 	for (auto game_object : physicables) {
 		if (game_object->is_active()) {
 			act_on(game_object);
+		}
+		else {
+			/* Do  nothing*/
 		}
 	}
 }

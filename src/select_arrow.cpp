@@ -16,6 +16,17 @@
 #include <assert.h>
 
 using namespace mindscape;
+const int adition_time = 200;
+
+const int level_1_y_position = 175;
+const int level_2_y_position = 227;
+const int level_credits_y_position = 280;
+const int level_exit_y_position = 335;
+
+const std::string arrow_font_path = "../assets/fonts/FFF_Tusj.ttf";
+const std::string arrow_font_name = "selector";
+const int arrow_font_priority = 5;
+const int arrow_font_size = 35;
 
 /**
  * @brief Constructor for SelectArrow
@@ -87,7 +98,7 @@ void SelectArrow::on_event(GameEvent game_event) {
 	if (enable) {
 		if (event_name == "DOWN") {
 			enable = false;
-			next_time = time + 200;
+			next_time = time + adition_time;
 
 			if (arrow_seletor >= 0 && arrow_seletor < 3) {
 				arrow_seletor += 1;
@@ -95,10 +106,13 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 0;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
 
 		if (event_name == "UP") {
 			enable = false;
-			next_time = time + 200;
+			next_time = time + adition_time;
 
 			if (arrow_seletor <= 3 && arrow_seletor > 0) {
 				arrow_seletor -= 1;
@@ -106,6 +120,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 				arrow_seletor = 3;
 			}
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	if (enable == false) {
@@ -113,6 +133,12 @@ void SelectArrow::on_event(GameEvent game_event) {
 			enable = true;
 			time = 0;
 		}
+		else {
+			/* Do  nothing*/
+		}
+	}
+	else {
+		/* Do  nothing*/
 	}
 
 	arrow_select(event_name);
@@ -139,36 +165,48 @@ void SelectArrow::arrow_select(std::string event_name) {
 		assert(arrow_seletor >= 0);
 		//Initialize
 		case (0):
-			set_position(std::make_pair(get_position().first, 175));
+			set_position(std::make_pair(get_position().first, level_1_y_position));
 
 			if (event_name == "ENTER") {
 				action->execute("../data/1.level.dat");
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
 			//Instructions
 		case (1):
-			set_position(std::make_pair(get_position().first, 227));
+			set_position(std::make_pair(get_position().first, level_2_y_position));
 
 			if (event_name == "ENTER") {
 				action->execute("../data/2.level.dat");
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
 			//Credits
 		case (2):
-			set_position(std::make_pair(get_position().first, 280));
+			set_position(std::make_pair(get_position().first, level_credits_y_position));
 
 			if (event_name == "ENTER") {
 				action->execute("../data/credits_scene.dat");
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
 			//Exit
 		case (3):
-			set_position(std::make_pair(get_position().first, 335));
+			set_position(std::make_pair(get_position().first, level_exit_y_position));
 
 			if (event_name == "ENTER") {
+			}
+			else {
+				/* Do  nothing*/
 			}
 			break;
 
@@ -176,3 +214,4 @@ void SelectArrow::arrow_select(std::string event_name) {
 			break;
 	}
 }
+
