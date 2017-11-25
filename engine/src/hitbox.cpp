@@ -12,6 +12,7 @@
 #include <iostream>
 #include "hitbox.hpp"
 #include <include/log.hpp>
+#include <assert.h>
 
 using namespace engine;
 
@@ -65,6 +66,8 @@ void Hitbox::initialize() {
  * @return std::pair<int, int> Dimensions of the hitbox.
  */
 std::pair<int, int> Hitbox::get_dimensions() {
+    assert(hitbox.w >= 0 && hitbox.h >= 0);
+
     return std::make_pair(hitbox.w, hitbox.h);
 }
 
@@ -76,6 +79,7 @@ std::pair<int, int> Hitbox::get_dimensions() {
  */
 void Hitbox::set_dimensions(std::pair<int, int> p_dimensions) {
     INFO("Setting all dimensions of hitboxes!");
+    assert(p_dimensions.first >= 0 && p_dimensions.second >= 0);
 
     /*
      * Is the dimensions of the hitbox. w = width and h = height.
@@ -97,6 +101,8 @@ void Hitbox::set_dimensions(std::pair<int, int> p_dimensions) {
  */
 void Hitbox::set_displacement(std::pair<int, int> go_coordinates,
     std::pair<int, int> p_displacement) {
+    assert(go_coordinates.first >= 0 && go_coordinates.second >= 0);
+    assert(p_displacement.first >= 0 && p_displacement.second >= 0);
 
     /*
      * Hitbox x and y are the coordinates of the hitbox and your movement.
@@ -130,13 +136,22 @@ std::pair<int, int> Hitbox::get_coordinates() {
  * @return void.
  */
 void Hitbox::update(std::pair<int, int> go_coordinates) {
-
     /*
      * Hitbox x and y are the update coordinates of the hitbox and your movement.
      * All the coordinates are in pixels.
      */
     hitbox.x = get_displacement().first + go_coordinates.first;
     hitbox.y = get_displacement().second + go_coordinates.second;
+}
+
+/**
+ * @brief This method gets the coordinates of the hitbox.
+ *
+ * @return Returns the position in axis X and Y of the hitbox.
+ */
+std::pair<int, int> Hitbox::get_coordinates() {
+    std::pair<int, int> coordinates = std::make_pair(hitbox.x, hitbox.y);   
+    return coordinates;
 }
 
 /**
@@ -150,6 +165,7 @@ void Hitbox::update(std::pair<int, int> go_coordinates) {
  */
 bool Hitbox::collides_with(Hitbox* other_hitbox) {
     // INFO("Identifies collision with two different hitboxes");
+    //assert(other_hitbox);
 
     int left_a = 0; /**< int. Coordinate of the hitbox in axis x */
     int right_a = 0; /**< int. Coordinate in axis x and width of the hitbox */
@@ -233,6 +249,46 @@ bool Hitbox::collides_with(Hitbox* other_hitbox) {
         /* If the left of the hitbox a collides with the right of hitbox b */
         return false;
     }
+
+    return true;
+}
+
+/**
+ * @brief Load and show the hitbox on the screen.
+ *
+ * this method load an image and initialize as a hitbox.
+ *
+ * @return void.
+ */
+void Hitbox::initialize() {
+    INFO("Initializing all hitboxes");
+
+    /**<
+     * SDL_Surface. Structure that contains a collection of pixels and images of the surface.
+     */
+    SDL_Surface* loaded_surface = nullptr;
+    loaded_surface =
+     IMG_Load("../assets/images/scenes/test_scene/Fundo-Vermelho.jpg");
+
+    SDL_Texture* new_texture = nullptr; /**< SDL_Texture. A group of pixels. */
+
+    if (loaded_surface != NULL) {
+        /* if the surface image is loaded  */
+
+        INFO("Surfaces' loaded");
+
+        new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
+
+        assert(new_texture);
+
+        if (new_texture == NULL) {
+            /* if the texture is null  */
+            INFO("Unable to create texture from! SDL Error: SDL_GetError()");
+        }
+
+        SDL_FreeSurface(loaded_surface);
+    }
+
     else {
   		/* Do  nothing*/
   	}
