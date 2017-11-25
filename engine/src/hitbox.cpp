@@ -17,50 +17,6 @@
 using namespace engine;
 
 /**
- * @brief Load and show the hitbox on the screen.
- *
- * this method load an image and initialize as a hitbox.
- *
- * @return void.
- */
-void Hitbox::initialize() {
-    INFO("Initializing all hitboxes");
-
-    /**<
-     * SDL_Surface. Structure that contains a collection of pixels and images of the surface.
-     */
-    SDL_Surface* loaded_surface = nullptr;
-    loaded_surface =
-     IMG_Load("../assets/images/scenes/test_scene/Fundo-Vermelho.jpg");
-
-    SDL_Texture* new_texture = nullptr; /**< SDL_Texture. A group of pixels. */
-
-    if (loaded_surface != NULL) {
-        /* if the surface image is loaded  */
-
-        INFO("Surfaces' loaded");
-
-        new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
-
-        if (new_texture == NULL) {
-            /* if the texture is null  */
-            INFO("Unable to create texture from! SDL Error: SDL_GetError()");
-        }
-        else {
-          /* Do  nothing*/
-        }
-
-        SDL_FreeSurface(loaded_surface);
-    }
-    else {
-        /* print if the image surface is not loaded  */
-        INFO("Unable to load image");
-    }
-
-    texture = new_texture;
-}
-
-/**
  * @brief This method return the width and height of the hitbox.
  *
  * @return std::pair<int, int> Dimensions of the hitbox.
@@ -115,15 +71,6 @@ void Hitbox::set_displacement(std::pair<int, int> go_coordinates,
      * Set de displacement of the hitbox.
      */
     Component::set_displacement(p_displacement);
-}
-
-/**
- * @brief This method gets the coordinates of the hitbox.
- *
- * @return Returns the position in axis X and Y of the hitbox.
- */
-std::pair<int, int> Hitbox::get_coordinates() {
-    return std::make_pair(hitbox.x, hitbox.y);
 }
 
 /**
@@ -290,10 +237,11 @@ void Hitbox::initialize() {
     }
 
     else {
-  		/* Do  nothing*/
-  	}
+  	   /* print if the image surface is not loaded  */
+        INFO("Unable to load image");
+    }
 
-    return true;
+    texture = new_texture;
 }
 
 /**

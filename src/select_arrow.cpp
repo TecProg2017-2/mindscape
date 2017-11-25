@@ -62,9 +62,9 @@ SelectArrow::SelectArrow(
 void SelectArrow::initialize_arrow() {
 	engine::Game game = engine::Game::get_instance();
 
-	engine::Text *selector = new engine::Text(game.get_renderer(),
-										 arrow_font_name, std::make_pair(0, 0), arrow_font_priority, ">",
-										 arrow_font_path, arrow_font_size
+	engine::Text *sel = new engine::Text(game.get_renderer(),
+										 "selector", std::make_pair(0, 0), 5, ">",
+										 "../assets/fonts/FFF_Tusj.ttf", 35
 	);
 
 	sel->activate();
@@ -213,13 +213,5 @@ void SelectArrow::arrow_select(std::string event_name) {
 		default:
 			break;
 	}
-}
-
-/**
- * @brief Updates the object state
- *
- * @return void
- */
-void SelectArrow::update_state() {
 }
 

@@ -59,8 +59,6 @@ std::pair<float, float> Physics::calculate_speed(std::pair<float, float> speed) 
 	}
 }
 
-<<<<<<< HEAD
-=======
 /**
 * @brief Calculates the position of an object.
 *
@@ -79,7 +77,6 @@ std::pair<float, float> Physics::calculate_position(std::pair<float, float> posi
 	return new_position;
 
 }
->>>>>>> master
 
 /**
 * @brief Updates the speed of a game object.
@@ -96,25 +93,6 @@ void Physics::update_speed(GameObject *game_object) {
 	std::pair<float, float> new_speed = calculate_speed(old_speed);
 
 	game_object->set_speed(new_speed);
-}
-
-/**
-* @brief Calculates the position of an object.
-*
-* With speed, the position of the game objects must change.
-*
-* @param std::pair with the current position of the object
-* @param std::pair with the current speed of the object
-* @return std::pair with the new position of the object.
-*/
-std::pair<float, float> Physics::calculate_position(std::pair<float, float> position, std::pair<float, float> speed) {
-
-  	std::pair<float, float> new_position (default_position, default_position);
-  
-	  new_position.first = position.first + speed.first;
-		new_position.second = position.second + speed.second;
-
-		return new_position;
 }
 
 /**
