@@ -62,46 +62,46 @@ engine::Animation* HudGirl::create_animation(
     double duration,
     std::string direction) {
 		/* Paramters verification */
-		assert(!path.empty() && !direction.empty());
-		assert(sprite_lines >= 0 && sprite_columns >= 0 && duration >= 0.0);
+	assert(!path.empty() && !direction.empty());
+	assert(sprite_lines >= 0 && sprite_columns >= 0 && duration >= 0.0);
 
-        DEBUG("Started: HudGirl create_animation()");
+    DEBUG("Started: HudGirl create_animation()");
 
-		/* Objects declaration and initialization */
-        engine::Game& game = engine::Game::get_instance(); /**< Instance. Initialize instace of the game */
-        engine::Animation* animation = nullptr; /**< Animation. Animation of the girl */
+	/* Objects declaration and initialization */
+    engine::Game& game = engine::Game::get_instance(); /**< Instance. Initialize instace of the game */
+    engine::Animation* animation = nullptr; /**< Animation. Animation of the girl */
 
-        animation = new engine::Animation(
-            game.get_renderer(),
-            /* Hud Girl image path */
-            path,
-            /* is_active */
-            false,
-            std::make_pair(0, 0),
-            /* priority */
-            1,
-            sprite_lines,
-            sprite_columns,
-            duration,
-            /* in_loop */
-            true,
-            direction
-        );
+    animation = new engine::Animation(
+        game.get_renderer(),
+        /* Hud Girl image path */
+        path,
+        /* is_active */
+        false,
+        std::make_pair(0, 0),
+        /* priority */
+        1,
+        sprite_lines,
+        sprite_columns,
+        duration,
+        /* in_loop */
+        true,
+        direction
+    );
 
-		/* Constants declaration */
-		const std::pair<int, int> default_dimensions_hud_girl =
-		 std::make_pair(266, 90);
-		const std::pair<int, int> coordinates_on_texture_hud_girl =
-		 std::make_pair(0, 0);
+	/* Constants declaration */
+	const std::pair<int, int> default_dimensions_hud_girl =
+	 std::make_pair(266, 90);
+	const std::pair<int, int> coordinates_on_texture_hud_girl =
+	 std::make_pair(0, 0);
 
-        animation->set_values(
-            default_dimensions_hud_girl,
-            default_dimensions_hud_girl,
-            coordinates_on_texture_hud_girl);
+    animation->set_values(
+        default_dimensions_hud_girl,
+        default_dimensions_hud_girl,
+        coordinates_on_texture_hud_girl);
 
-        return animation;
+    return animation;
 
-        DEBUG("Ended: HudGirl create_animation()");
+    DEBUG("Ended: HudGirl create_animation()");
 }
 
 /**
@@ -148,6 +148,9 @@ void HudGirl::notify(engine::Observable* game_object) {
             std::make_pair(first_image, first_image)
         );
     }
+	else {
+		/* Do nothing */
+	}
 
     DEBUG("Ended: HudGirl notify()");
 }
