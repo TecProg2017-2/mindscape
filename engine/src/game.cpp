@@ -56,6 +56,7 @@ Game& Game::initialize(std::string p_name, std::pair<int, int> p_dimensions) {
         instance = new Game();
         instance->set_information(p_name, p_dimensions);
         instance->init();
+        assert(instance);
     }
     else {
         /*Do nothing*/
@@ -145,6 +146,7 @@ void Game::init() {
  */
 void Game::load_media() {
     actual_scene->load();
+    assert(actual_scene);
     loaded_media = true;
 }
 
@@ -154,6 +156,7 @@ void Game::load_media() {
  * @return Returns the situation of media.
  */
  bool Game::is_media_loaded() {
+    assert(loaded_media == 1 || loaded_media == 0);
     return loaded_media;
 }
 
@@ -211,12 +214,22 @@ void renderScreen(SDL_Renderer* renderer, Scene* actual_scene) {
 void Game::run() {
     state = RUNNING;
     DEBUG("Game is running");
-    if (is_media_loaded()) {
+
+    bool media_is_loaded = is_media_loaded();
+
+    if (media_is_loaded && !media_is_loaded) {
+        WARN("Failed media loaded verification");
+        throw_error("Invalid bool value");
+    }
+
+    if (media_is_loaded) {
         DEBUG("Game media is loaded");
 		/* if the media is already loaded */
         SDL_Event e;
 
         EventHandler event_handler = EventHandler();
+
+        assert(event_handler);
 
         Time::init();
 
@@ -294,6 +307,7 @@ void Game::change_scene(Scene *level) {
  *
  */
  Scene* Game::get_actual_scene() {
+    assert(actual_scene);
     return actual_scene;
 }
 
@@ -334,6 +348,10 @@ bool Game::RGBA_color_is_valid(int R, int G, int B, int A) {
         /*All values are valid*/
     }
 
+    if (color_is_valid != true && color_is_valid != false) {
+      WARN("Invalid bool value in RGBA_color_is_valid");
+      throw_error("Invalid bool value");
+    }
     return color_is_valid;
 }
 
@@ -350,7 +368,14 @@ bool Game::RGBA_color_is_valid(int R, int G, int B, int A) {
  * @return void.
  */
 void Game::set_game_background_color(int R, int G, int B, int A) {
-    if (RGBA_color_is_valid(R, G, B, A)) {
+    bool color_is_valid = RGBA_color_is_valid(R, G, B, A);
+
+    if (color_is_valid != true && color_is_valid != false) {
+      WARN("Failed color validation");
+      throw_error("Invalid bool value");
+    }
+
+    if (color_is_valid) {
         /*Ensures that the color values given are valid*/
         game_background_color = Color(R, G, B, A);
     }

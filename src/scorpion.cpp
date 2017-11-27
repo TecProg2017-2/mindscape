@@ -8,12 +8,13 @@
  * https://github.com/TecProg2017-2/mindscape/blob/master/LICENSE.md
  */
 
-#include "../include/scorpion.hpp"
-#include "../include/platform.hpp"
-#include "../include/little_girl.hpp"
-#include "../engine/include/log.hpp"
+#include "scorpion.hpp"
+#include "platform.hpp"
+#include "little_girl.hpp"
+#include "log.hpp"
 #include <stdlib.h>
 #include <limits>
+#include <assert.h>
 
 using namespace mindscape;
 
@@ -92,6 +93,7 @@ engine::Animation* Scorpion::create_animation(
         direction
     );
 
+    assert(animation != nullptr);
 
     /* Sets values to init a initial position of animation on the screen.*/
 
@@ -164,6 +166,8 @@ void Scorpion::initialize_walking_animations(){
         walking_sprite_lines, walking_sprite_columns, walking_duration, "LEFT"
     );
 
+    assert(walking_left_animation != nullptr);
+
     /* Adds scorpion's walk animation to the left. */
     add_animation("walking_left_animation", walking_left_animation);
 
@@ -176,6 +180,8 @@ void Scorpion::initialize_walking_animations(){
         "../assets/images/sprites/enemies/scorpion/scorpion_walking_right.png",
         walking_sprite_lines, walking_sprite_columns, walking_duration, "RIGHT"
     );
+
+    assert(walking_right_animation != nullptr);
 
     /* Adds scorpion's walk animation to the right. */
     add_animation("walking_right_animation", walking_right_animation);
@@ -194,7 +200,9 @@ void Scorpion::initialize_walking_animations(){
  */
 
 void Scorpion::activate_idle_animation(engine::Animation* idle_right_animation){
-    /* Function core. */
+    assert(idle_right_animation != nullptr);
+    /* Function core. */  
+  
     /* Sets scorpion's idle animation to define when its stopped. */
     idle_right_animation->activate();
     set_actual_animation(idle_right_animation);
@@ -229,6 +237,8 @@ void Scorpion::initialize_idle_animations(){
         idle_sprite_lines, idle_sprite_columns, idle_duration, "LEFT"
     );
 
+    assert(idle_left_animation != nullptr);
+
     /* Adds scorpion's idle animation to the left. */
     add_animation("idle_left_animation", idle_left_animation);
 
@@ -241,6 +251,8 @@ void Scorpion::initialize_idle_animations(){
         "../assets/images/sprites/enemies/scorpion/scorpion_idle_right.png",
         idle_sprite_lines, idle_sprite_columns, idle_duration, "RIGHT"
     );
+
+    assert(idle_right_animation != nullptr);
 
     /* Adds scorpion's idle animation to the right. */
     add_animation("idle_right_animation", idle_right_animation);
@@ -278,6 +290,8 @@ void Scorpion::initialize_on_attack_animations(){
         "LEFT"
     );
 
+    assert(on_attack_left_animation != nullptr);
+
     /* Adds scorpion's under attack animation to the left. */
     add_animation("on_attack_left_animation", on_attack_left_animation);
 
@@ -291,6 +305,8 @@ void Scorpion::initialize_on_attack_animations(){
         on_attack_sprite_lines, on_attack_sprite_columns, on_attack_duration,
         "RIGHT"
     );
+
+    assert(on_attack_right_animation != nullptr);
 
     /* Adds scorpion's under attack animation to the right. */
     add_animation("on_attack_right_animation", on_attack_right_animation);
@@ -324,6 +340,8 @@ void Scorpion::initialize_attacking_animations(){
         "LEFT"
     );
 
+    assert(attacking_left_animation != nullptr);
+
     /* Adds scorpion's attacking animation to the left. */
     add_animation("attacking_left_animation", attacking_left_animation);
 
@@ -337,6 +355,8 @@ void Scorpion::initialize_attacking_animations(){
         attacking_sprite_lines, attacking_sprite_columns, attacking_duration,
         "RIGHT"
     );
+
+    assert(attacking_right_animation != nullptr);
 
     /* Adds scorpion's attacking animation to the right. */
     add_animation("attacking_right_animation", attacking_right_animation);
@@ -354,7 +374,10 @@ void Scorpion::initialize_attacking_animations(){
  */
 
 void define_final_left_animation(engine::Animation* dying_left_animation){
+    assert(dying_left_animation != nullptr);
+
     /* Function core. */
+
     /* Initialize booleans that references the scorpion's death animation
     process, to the left. */
     dying_left_animation->is_a_final_animation = true;
@@ -374,7 +397,10 @@ void define_final_left_animation(engine::Animation* dying_left_animation){
  */
 
 void define_final_right_animation(engine::Animation* dying_right_animation){
+    assert(dying_right_animation != nullptr);
+
     /* Function core. */
+
     /* Initialize booleans that references the scorpion's death animation
     process, to the right. */
     dying_right_animation->is_a_final_animation = true;
@@ -407,6 +433,8 @@ void Scorpion::initialize_dying_animations(){
         dying_sprite_lines, dying_sprite_columns, dying_duration, "LEFT"
     );
 
+    assert(dying_left_animation != nullptr);
+
     define_final_left_animation(dying_left_animation);
 
     /* Adds scorpion's dying animation to the left. */
@@ -421,6 +449,8 @@ void Scorpion::initialize_dying_animations(){
         "../assets/images/sprites/enemies/scorpion/scorpion_dying_right.png",
         dying_sprite_lines, dying_sprite_columns, dying_duration, "RIGHT"
     );
+
+    assert(dying_right_animation != nullptr);
 
     define_final_right_animation(dying_right_animation);
 
@@ -451,6 +481,8 @@ void Scorpion::initialize_as_physicable() {
     physics->add_physicable(this);
     collidable = true;
 
+    assert(physics != nullptr);
+
     /* Ends debugger that represents the end of the method. */
     DEBUG("Scorpion is now collidable.");
 }
@@ -479,6 +511,8 @@ void Scorpion::initialize_scorpion_hitbox(engine::Game game){
         std::make_pair(180, 8),
         game.get_renderer()
     );
+
+    assert(scorpion_hitbox != nullptr);
 
     /* Adds scorpion's hitbox component. */
     add_component(scorpion_hitbox);
@@ -509,7 +543,10 @@ void Scorpion::initialize_scorpion_attack_hitbox(engine::Game game){
         game.get_renderer()
     );
 
-    /* Adds scorpion's attack hitbox component. */
+    /* Verifies if the hitbox has been created successfully. */
+    assert(scorpion_attack != nullptr);
+
+    /* Adds scorpion's attack hitbox component .*/
     add_component(scorpion_attack);
 }
 
@@ -577,7 +614,11 @@ void Scorpion::initialize_scorpion_attacking_audio(){
     scorpion_attacking = new engine::Audio(
         "attack",
         "../assets/audios/effects_songs/ataque_insetos.wav",
-        engine::Audio::CHUNK);
+        engine::Audio::CHUNK
+    );
+
+    /* Verifies if the audio was initiated. */
+    assert(scorpion_attacking != nullptr);
 
     set_duration_scorpion_attacking(scorpion_attacking);
 
@@ -597,6 +638,8 @@ void Scorpion::initialize_scorpion_attacking_audio(){
  */
 
 void set_duration_scorpion_attacking(engine::Audio* scorpion_attacking){
+    assert(scorpion_attacking != nullptr);
+
     /* Constant declaration. */
     const double duration_attacking = 0.7;
 
@@ -623,7 +666,10 @@ void Scorpion::initialize_scorpion_on_attack_audio(){
     scorpion_on_attack = new engine::Audio(
         "hit_me",
         "../assets/audios/effects_songs/inseto_apanhando.wav",
-        engine::Audio::CHUNK);
+        engine::Audio::CHUNK
+    );
+
+    assert(scorpion_on_attack != nullptr);
 
     set_duration_scorpion_on_attack(scorpion_on_attack);
 
@@ -643,6 +689,8 @@ void Scorpion::initialize_scorpion_on_attack_audio(){
  */
 
 void set_duration_scorpion_on_attack(engine::Audio* scorpion_on_attack){
+    assert(scorpion_on_attack != nullptr);
+  
     /* Constant declaration. */
     const double on_attack_duration = 0.8;
 
@@ -690,7 +738,9 @@ void Scorpion::on_event(GameEvent game_event) {
     /* Gets event related with the scorpion. */
     event_name = game_event.game_event_name;
 
-    /* Variable declaration. */
+    assert(event_name != "");
+
+  /* Variable declaration. */
     int actual_position = 0; /**< Integer.
     Define the actual position of the scorpion on the screen. */
 
@@ -733,6 +783,8 @@ void Scorpion::notify(engine::Observable *game_object) {
     /* Object declaration. */
     LittleGirl* little_girl = nullptr; /**< LittleGirl.
     Gets as observable that tells when little_girl is next. */
+
+    assert(game_object != nullptr);
 
     little_girl = dynamic_cast<LittleGirl *>(game_object);
 
@@ -892,6 +944,8 @@ void Scorpion::move(engine::GameObject* girl) {
     /* Variable declaration. */
     float girl_position_y = 0;
     girl_position_y = girl->get_position_y();
+
+    assert(girl != nullptr);
 
     verifies_same_nivel(scorpion_position_y, girl_position_y);
 
@@ -1107,6 +1161,9 @@ void Scorpion::attack() {
 
 void Scorpion::on_attack(GameObject *game_object) {
     DEBUG("The scorpion is under attack.");
+
+    assert(game_object != nullptr);
+
     /* Sets a state that represents when scorpion is under attack. */
     states.set_state("ACTION_STATE","ON_ATTACK");
 
@@ -1165,6 +1222,7 @@ void Scorpion::on_attack(GameObject *game_object) {
 
 void Scorpion::die(engine::GameObject *game_object) {
     DEBUG("The scorpion is dying.");
+    assert(game_object != nullptr);
 
     /* Variable declaration. */
     std::string actual_x_state = ""; /**< String.
