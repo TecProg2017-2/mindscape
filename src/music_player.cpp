@@ -26,6 +26,7 @@ using namespace mindscape;
  */
 void MusicPlayer::update_state() {
 
+    /* Constant declaration. */
     const int volumn_music = 30;
 
     if (get_audio_by_name("music_menu")) {
@@ -42,9 +43,6 @@ void MusicPlayer::update_state() {
 
         /* Set the music volumn of the loop level 1 in 30. */
         set_music_volume("loop_level_1", volumn_music);
-
-        const int fade_time = 500;
-        const int delay = 100;
 
         const int initial_time = 25850;
         const int limit_in_clown_field = 13500;
@@ -118,6 +116,7 @@ void MusicPlayer::update_state() {
  * @return void.
  */
 void MusicPlayer::on_event(GameEvent game_event) {
+    /* Variable declaration. */
     std::string event_name = "";
     event_name = game_event.game_event_name;
 
